@@ -1,0 +1,284 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE515DA4A32009EFF09 /* UIKit.framework */; };
+		F79DCDE815DA4A32009EFF09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE715DA4A32009EFF09 /* Foundation.framework */; };
+		F79DCDEA15DA4A32009EFF09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE915DA4A32009EFF09 /* CoreGraphics.framework */; };
+		F79DCDF015DA4A32009EFF09 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F79DCDEE15DA4A32009EFF09 /* InfoPlist.strings */; };
+		F79DCDF215DA4A32009EFF09 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F79DCDF115DA4A32009EFF09 /* main.m */; };
+		F79DCDF615DA4A32009EFF09 /* BallDropAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F79DCDF515DA4A32009EFF09 /* BallDropAppDelegate.m */; };
+		F79DCDF915DA4A32009EFF09 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F79DCDF715DA4A32009EFF09 /* MainStoryboard.storyboard */; };
+		F79DCDFC15DA4A32009EFF09 /* BallDropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79DCDFB15DA4A32009EFF09 /* BallDropViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F79DCDE115DA4A32009EFF09 /* BallDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BallDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F79DCDE515DA4A32009EFF09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F79DCDE715DA4A32009EFF09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F79DCDE915DA4A32009EFF09 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F79DCDED15DA4A32009EFF09 /* BallDrop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BallDrop-Info.plist"; sourceTree = "<group>"; };
+		F79DCDEF15DA4A32009EFF09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F79DCDF115DA4A32009EFF09 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F79DCDF315DA4A32009EFF09 /* BallDrop-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BallDrop-Prefix.pch"; sourceTree = "<group>"; };
+		F79DCDF415DA4A32009EFF09 /* BallDropAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BallDropAppDelegate.h; sourceTree = "<group>"; };
+		F79DCDF515DA4A32009EFF09 /* BallDropAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BallDropAppDelegate.m; sourceTree = "<group>"; };
+		F79DCDF815DA4A32009EFF09 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		F79DCDFA15DA4A32009EFF09 /* BallDropViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BallDropViewController.h; sourceTree = "<group>"; };
+		F79DCDFB15DA4A32009EFF09 /* BallDropViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BallDropViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F79DCDDE15DA4A32009EFF09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */,
+				F79DCDE815DA4A32009EFF09 /* Foundation.framework in Frameworks */,
+				F79DCDEA15DA4A32009EFF09 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F79DCDD615DA4A32009EFF09 = {
+			isa = PBXGroup;
+			children = (
+				F79DCDEB15DA4A32009EFF09 /* BallDrop */,
+				F79DCDE415DA4A32009EFF09 /* Frameworks */,
+				F79DCDE215DA4A32009EFF09 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F79DCDE215DA4A32009EFF09 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F79DCDE115DA4A32009EFF09 /* BallDrop.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F79DCDE415DA4A32009EFF09 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F79DCDE515DA4A32009EFF09 /* UIKit.framework */,
+				F79DCDE715DA4A32009EFF09 /* Foundation.framework */,
+				F79DCDE915DA4A32009EFF09 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F79DCDEB15DA4A32009EFF09 /* BallDrop */ = {
+			isa = PBXGroup;
+			children = (
+				F79DCDF415DA4A32009EFF09 /* BallDropAppDelegate.h */,
+				F79DCDF515DA4A32009EFF09 /* BallDropAppDelegate.m */,
+				F79DCDF715DA4A32009EFF09 /* MainStoryboard.storyboard */,
+				F79DCDFA15DA4A32009EFF09 /* BallDropViewController.h */,
+				F79DCDFB15DA4A32009EFF09 /* BallDropViewController.m */,
+				F79DCDEC15DA4A32009EFF09 /* Supporting Files */,
+			);
+			path = BallDrop;
+			sourceTree = "<group>";
+		};
+		F79DCDEC15DA4A32009EFF09 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F79DCDED15DA4A32009EFF09 /* BallDrop-Info.plist */,
+				F79DCDEE15DA4A32009EFF09 /* InfoPlist.strings */,
+				F79DCDF115DA4A32009EFF09 /* main.m */,
+				F79DCDF315DA4A32009EFF09 /* BallDrop-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F79DCDE015DA4A32009EFF09 /* BallDrop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F79DCDFF15DA4A32009EFF09 /* Build configuration list for PBXNativeTarget "BallDrop" */;
+			buildPhases = (
+				F79DCDDD15DA4A32009EFF09 /* Sources */,
+				F79DCDDE15DA4A32009EFF09 /* Frameworks */,
+				F79DCDDF15DA4A32009EFF09 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BallDrop;
+			productName = BallDrop;
+			productReference = F79DCDE115DA4A32009EFF09 /* BallDrop.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F79DCDD815DA4A32009EFF09 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BallDrop;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = F79DCDDB15DA4A32009EFF09 /* Build configuration list for PBXProject "BallDrop" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F79DCDD615DA4A32009EFF09;
+			productRefGroup = F79DCDE215DA4A32009EFF09 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F79DCDE015DA4A32009EFF09 /* BallDrop */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F79DCDDF15DA4A32009EFF09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F79DCDF015DA4A32009EFF09 /* InfoPlist.strings in Resources */,
+				F79DCDF915DA4A32009EFF09 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F79DCDDD15DA4A32009EFF09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F79DCDF215DA4A32009EFF09 /* main.m in Sources */,
+				F79DCDF615DA4A32009EFF09 /* BallDropAppDelegate.m in Sources */,
+				F79DCDFC15DA4A32009EFF09 /* BallDropViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F79DCDEE15DA4A32009EFF09 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F79DCDEF15DA4A32009EFF09 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F79DCDF715DA4A32009EFF09 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F79DCDF815DA4A32009EFF09 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F79DCDFD15DA4A32009EFF09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		F79DCDFE15DA4A32009EFF09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F79DCE0015DA4A32009EFF09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BallDrop/BallDrop-Prefix.pch";
+				INFOPLIST_FILE = "BallDrop/BallDrop-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F79DCE0115DA4A32009EFF09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BallDrop/BallDrop-Prefix.pch";
+				INFOPLIST_FILE = "BallDrop/BallDrop-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F79DCDDB15DA4A32009EFF09 /* Build configuration list for PBXProject "BallDrop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F79DCDFD15DA4A32009EFF09 /* Debug */,
+				F79DCDFE15DA4A32009EFF09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F79DCDFF15DA4A32009EFF09 /* Build configuration list for PBXNativeTarget "BallDrop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F79DCE0015DA4A32009EFF09 /* Debug */,
+				F79DCE0115DA4A32009EFF09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F79DCDD815DA4A32009EFF09 /* Project object */;
+}
