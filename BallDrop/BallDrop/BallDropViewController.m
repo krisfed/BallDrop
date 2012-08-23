@@ -51,7 +51,7 @@
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *) touch 
 {
-    return ([touch locationInView:self.view].y < self.view.bounds.size.height - 100);
+    return ([touch locationInView:self.view].y < self.view.bounds.size.height - 70);
 }
 
 
