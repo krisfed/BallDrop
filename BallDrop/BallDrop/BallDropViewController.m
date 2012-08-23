@@ -41,12 +41,21 @@
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap:)];
     tap.delegate = self;
     [self.view addGestureRecognizer:tap];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    UIPanGestureRecognizer *pan =[[UIPanGestureRecognizer alloc] initWithTarget: self action:@selector(handlePan:)];
+    pan.delegate = self;
+    [self.view addGestureRecognizer:pan];
+    
 }
 
--(void)handleTap:(UITapGestureRecognizer *) tap
+- (void) handleTap:(UITapGestureRecognizer *) tap
 {
     NSLog(@"Tap!");
+}
+
+- (void) handlePan:(UIPanGestureRecognizer *) pan
+{
+    NSLog(@"Pan Recognized");
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *) touch 
@@ -91,6 +100,15 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
+{
+    glClearColor(0.65f, 0.68f, 0.77f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //[self.effect prepareToDraw];
+    //[self renderModel];        
 }
 
 @end
