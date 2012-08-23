@@ -9,14 +9,26 @@
 #import "BallDropViewController.h"
 
 @interface BallDropViewController ()
+@property (strong, nonatomic) EAGLContext *context;
 
 @end
 
 @implementation BallDropViewController
 
+@synthesize context = _context;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    if (!self.context) {
+        NSLog(@"Failed to create ES context");
+    }
+    
+    GLKView *view = (GLKView *)self.view;
+    view.context = self.context;
+    [EAGLContext setCurrentContext:self.context];
     
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap:)];
     tap.delegate = self;
