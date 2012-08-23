@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED151EDC15E6814700F3966E /* BallDropStartUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED151EDA15E6814700F3966E /* BallDropStartUpViewController.m */; };
+		ED151EDD15E6814700F3966E /* BallDropStartUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED151EDB15E6814700F3966E /* BallDropStartUpViewController.xib */; };
 		EDD581F215E6668D00D211A2 /* BallDropModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F115E6668D00D211A2 /* BallDropModel.m */; };
 		EDD581F615E6677A00D211A2 /* BallDropSound.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F515E6677A00D211A2 /* BallDropSound.m */; };
 		F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE515DA4A32009EFF09 /* UIKit.framework */; };
@@ -22,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED151ED915E6814700F3966E /* BallDropStartUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropStartUpViewController.h; sourceTree = SOURCE_ROOT; };
+		ED151EDA15E6814700F3966E /* BallDropStartUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropStartUpViewController.m; sourceTree = SOURCE_ROOT; };
+		ED151EDB15E6814700F3966E /* BallDropStartUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BallDropStartUpViewController.xib; sourceTree = SOURCE_ROOT; };
 		EDD581F015E6668D00D211A2 /* BallDropModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropModel.h; sourceTree = "<group>"; };
 		EDD581F115E6668D00D211A2 /* BallDropModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropModel.m; sourceTree = "<group>"; };
 		EDD581F415E6677A00D211A2 /* BallDropSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropSound.h; sourceTree = "<group>"; };
@@ -91,8 +96,11 @@
 		F79DCDEB15DA4A32009EFF09 /* BallDrop */ = {
 			isa = PBXGroup;
 			children = (
+				ED151EDB15E6814700F3966E /* BallDropStartUpViewController.xib */,
 				EDD581F415E6677A00D211A2 /* BallDropSound.h */,
 				EDD581F515E6677A00D211A2 /* BallDropSound.m */,
+				ED151ED915E6814700F3966E /* BallDropStartUpViewController.h */,
+				ED151EDA15E6814700F3966E /* BallDropStartUpViewController.m */,
 				EDD581F015E6668D00D211A2 /* BallDropModel.h */,
 				EDD581F115E6668D00D211A2 /* BallDropModel.m */,
 				F79DCDF415DA4A32009EFF09 /* BallDropAppDelegate.h */,
@@ -169,6 +177,7 @@
 			files = (
 				F79DCDF015DA4A32009EFF09 /* InfoPlist.strings in Resources */,
 				F79DCDF915DA4A32009EFF09 /* MainStoryboard.storyboard in Resources */,
+				ED151EDD15E6814700F3966E /* BallDropStartUpViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +193,7 @@
 				F79DCDFC15DA4A32009EFF09 /* BallDropViewController.m in Sources */,
 				EDD581F215E6668D00D211A2 /* BallDropModel.m in Sources */,
 				EDD581F615E6677A00D211A2 /* BallDropSound.m in Sources */,
+				ED151EDC15E6814700F3966E /* BallDropStartUpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

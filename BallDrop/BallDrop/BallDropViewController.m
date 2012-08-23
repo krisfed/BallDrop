@@ -7,14 +7,17 @@
 //
 
 #import "BallDropViewController.h"
+#import "BallDropStartUpViewController.h"
 #import "BallDropModel.h"
 
 @interface BallDropViewController ()
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) BallDropModel *model;
+@property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) id selectedItem;
+
 
 @end
 
@@ -24,6 +27,7 @@
 @synthesize isPlaying = _isPlaying;
 @synthesize selectedItem = _selectedItem;
 @synthesize context = _context;
+@synthesize startUpPopover = _startUpPopover;
 
 - (void)viewDidLoad
 {
@@ -45,7 +49,6 @@
     UIPanGestureRecognizer *pan =[[UIPanGestureRecognizer alloc] initWithTarget: self action:@selector(handlePan:)];
     pan.delegate = self;
     [self.view addGestureRecognizer:pan];
-    
 }
 
 - (void) handleTap:(UITapGestureRecognizer *) tap
@@ -64,19 +67,23 @@
 }
 
 
-- (IBAction)newFilePressed:(UIButton *)sender {
+- (IBAction)newFilePressed:(UIButton *)sender 
+{
     NSLog(@"new file");
 }
 
-- (IBAction)saveFilePressed:(UIButton *)sender {
+- (IBAction)saveFilePressed:(UIButton *)sender 
+{
     NSLog(@"save file");
 }
 
-- (IBAction)loadFilePressed:(UIButton *)sender {
+- (IBAction)loadFilePressed:(UIButton *)sender 
+{
     NSLog(@"load file");
 }
 
-- (IBAction)newBallSourcePressed:(UIButton *)sender {
+- (IBAction)newBallSourcePressed:(UIButton *)sender 
+{
     NSLog(@"new ball source");
 }
 
@@ -89,6 +96,16 @@
     else {
         [sender setTitle:@"▷" forState:UIControlStateNormal];
     }
+}
+
+- (IBAction)helpPressed:(UIButton *)sender 
+{
+    BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
+    popover.delegate = self;
+    
+    self.startUpPopover = popover;
+    [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
 }
 
 - (void)viewDidUnload

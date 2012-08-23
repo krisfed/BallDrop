@@ -10,6 +10,6 @@
 #import <GLKit/GLKit.h>
 
 
-@interface BallDropViewController : UIViewController <UIGestureRecognizerDelegate>
+@interface BallDropViewController : UIViewController <UIGestureRecognizerDelegate,UIPopoverControllerDelegate>
 
 @end

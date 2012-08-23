@@ -31,7 +31,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bHf-rI-2bc">
-                                <rect key="frame" x="114" y="942" width="72" height="37"/>
+                                <rect key="frame" x="100" y="942" width="72" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
                                 <state key="normal" title="Save">
@@ -46,7 +46,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BeS-Ex-fC5">
-                                <rect key="frame" x="209" y="942" width="72" height="37"/>
+                                <rect key="frame" x="180" y="942" width="72" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
                                 <state key="normal" title="Load">
@@ -60,8 +60,23 @@
                                     <action selector="loadFilePressed:" destination="2" eventType="touchUpInside" id="fPQ-Nd-Bkc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8hf-fp-FxA">
+                                <rect key="frame" x="516" y="942" width="72" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
+                                <state key="normal" title="Help">
+                                    <color key="titleColor" red="0.61176472900000001" green="0.16862745579999999" blue="0.058823533359999999" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="helpPressed:" destination="2" eventType="touchUpInside" id="iAa-Qe-Xpe"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mif-ND-jJr">
-                                <rect key="frame" x="591" y="942" width="72" height="37"/>
+                                <rect key="frame" x="596" y="942" width="72" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="24"/>
                                 <state key="normal" title="+">
@@ -95,6 +110,7 @@
                     </view>
                 </viewController>
             </objects>
+            <point key="canvasLocation" x="-385" y="-14"/>
         </scene>
     </scenes>
     <classes>
