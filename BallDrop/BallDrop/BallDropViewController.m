@@ -17,9 +17,12 @@
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) BallDropModel *model;
+@property (strong, nonatomic) GLKBaseEffect *effect;
+@property (nonatomic) GLKMatrix4 viewModelMatrix; //how everything should be rendered normally
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) id selectedItem;
+
 
 
 @end
@@ -37,7 +40,20 @@
 @synthesize isPlaying = _isPlaying;
 @synthesize selectedItem = _selectedItem;
 @synthesize context = _context;
+@synthesize effect = _effect;
+@synthesize viewModelMatrix = _viewModelMatrix;
 @synthesize startUpPopover = _startUpPopover;
+
+/* 
+ Getter for the model with lazy instantiation
+*/
+- (BallDropModel *)getModel
+{
+    if (!_model){
+        _model = [[BallDropModel alloc] init];
+    }
+    return _model;
+}
 
 - (void)viewDidLoad
 {
@@ -55,6 +71,7 @@
     // initialize vertex models for circle and rectangle
     [self makeVertexModels];
     
+    //gestures:
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap:)];
     tap.delegate = self;
     [self.view addGestureRecognizer:tap];
@@ -62,10 +79,38 @@
     UIPanGestureRecognizer *pan =[[UIPanGestureRecognizer alloc] initWithTarget: self action:@selector(handlePan:)];
     pan.delegate = self;
     [self.view addGestureRecognizer:pan];
+    
+    
+    [self setupGL];
 }
 
 
+- (void)setupGL
+{
+    [EAGLContext setCurrentContext:self.context];
+    self.effect = [[GLKBaseEffect alloc] init];
+    
+    int width = self.view.bounds.size.width;
+    int height = self.view.bounds.size.height;
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, 0, height, 0.0, 1.0);
+//    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, height, 0, 0.0, 1.0); //invert y-axis to match screen coords
+    self.effect.transform.projectionMatrix = projectionMatrix;
+    
+//    self.viewModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);//origin at the center of the screen
+    
+    self.viewModelMatrix = GLKMatrix4Identity;
 
+    self.effect.transform.modelviewMatrix = self.viewModelMatrix;
+    [self.effect prepareToDraw];
+    
+}
+
+- (void)tearDownGL
+{
+    [EAGLContext setCurrentContext:self.context];
+    
+    self.effect = nil;
+}
 
 
 /*
@@ -256,6 +301,13 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [self tearDownGL];
+    
+    if ([EAGLContext currentContext] == self.context) {
+        [EAGLContext setCurrentContext:nil];
+    }
+	self.context = nil;
     // Release any retained subviews of the main view.
 }
 
@@ -264,13 +316,32 @@
     return YES;
 }
 
+//- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
+//{
+//    glClearColor(0.65f, 0.68f, 0.77f, 1.0f);
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    
+//    //[self.effect prepareToDraw];
+//    //[self renderModel];        
+//}
+
+
+#pragma mark - GLKView and GLKViewController delegate methods
+
+//- (void)update
+//{
+//    
+//}
+
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.65f, 0.68f, 0.77f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    //[self.effect prepareToDraw];
-    //[self renderModel];        
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+    [self renderModel];
 }
+
+
 
 @end
