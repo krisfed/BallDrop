@@ -7,14 +7,22 @@
 //
 
 #import "BallDropViewController.h"
+#import "BallDropModel.h"
 
 @interface BallDropViewController ()
+
 @property (strong, nonatomic) EAGLContext *context;
+@property (strong, nonatomic) BallDropModel *model;
+@property (nonatomic) BOOL isPlaying;
+@property (nonatomic) id selectedItem;
 
 @end
 
 @implementation BallDropViewController
 
+@synthesize model = _model;
+@synthesize isPlaying = _isPlaying;
+@synthesize selectedItem = _selectedItem;
 @synthesize context = _context;
 
 - (void)viewDidLoad
@@ -52,15 +60,26 @@
 }
 
 - (IBAction)saveFilePressed:(UIButton *)sender {
+    NSLog(@"save file");
 }
 
 - (IBAction)loadFilePressed:(UIButton *)sender {
+    NSLog(@"load file");
 }
 
 - (IBAction)newBallSourcePressed:(UIButton *)sender {
+    NSLog(@"new ball source");
 }
 
 - (IBAction)playStopPressed:(UIButton *)sender {
+    self.isPlaying = !self.isPlaying;
+    
+    if (self.isPlaying) {
+        [sender setTitle:@"□" forState:UIControlStateNormal];
+    }
+    else {
+        [sender setTitle:@"▷" forState:UIControlStateNormal];
+    }
 }
 
 - (void)viewDidUnload

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EDD581F215E6668D00D211A2 /* BallDropModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F115E6668D00D211A2 /* BallDropModel.m */; };
+		EDD581F615E6677A00D211A2 /* BallDropSound.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F515E6677A00D211A2 /* BallDropSound.m */; };
 		F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE515DA4A32009EFF09 /* UIKit.framework */; };
 		F79DCDE815DA4A32009EFF09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE715DA4A32009EFF09 /* Foundation.framework */; };
 		F79DCDEA15DA4A32009EFF09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE915DA4A32009EFF09 /* CoreGraphics.framework */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EDD581F015E6668D00D211A2 /* BallDropModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropModel.h; sourceTree = "<group>"; };
+		EDD581F115E6668D00D211A2 /* BallDropModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropModel.m; sourceTree = "<group>"; };
+		EDD581F415E6677A00D211A2 /* BallDropSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropSound.h; sourceTree = "<group>"; };
+		EDD581F515E6677A00D211A2 /* BallDropSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropSound.m; sourceTree = "<group>"; };
 		F79DCDE115DA4A32009EFF09 /* BallDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BallDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79DCDE515DA4A32009EFF09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F79DCDE715DA4A32009EFF09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -85,6 +91,10 @@
 		F79DCDEB15DA4A32009EFF09 /* BallDrop */ = {
 			isa = PBXGroup;
 			children = (
+				EDD581F415E6677A00D211A2 /* BallDropSound.h */,
+				EDD581F515E6677A00D211A2 /* BallDropSound.m */,
+				EDD581F015E6668D00D211A2 /* BallDropModel.h */,
+				EDD581F115E6668D00D211A2 /* BallDropModel.m */,
 				F79DCDF415DA4A32009EFF09 /* BallDropAppDelegate.h */,
 				F79DCDF515DA4A32009EFF09 /* BallDropAppDelegate.m */,
 				F79DCDF715DA4A32009EFF09 /* MainStoryboard.storyboard */,
@@ -172,6 +182,8 @@
 				F79DCDF215DA4A32009EFF09 /* main.m in Sources */,
 				F79DCDF615DA4A32009EFF09 /* BallDropAppDelegate.m in Sources */,
 				F79DCDFC15DA4A32009EFF09 /* BallDropViewController.m in Sources */,
+				EDD581F215E6668D00D211A2 /* BallDropModel.m in Sources */,
+				EDD581F615E6677A00D211A2 /* BallDropSound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
