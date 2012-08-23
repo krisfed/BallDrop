@@ -41,4 +41,12 @@ typedef struct {
 @property (nonatomic, strong)NSMutableArray *ballSources;
 @property (nonatomic, strong)NSMutableArray *collisions;
 
+
+
+- (void) startNewBlockFrom:(CGPoint)startPoint;
+- (void) updateNewBlockTo:(CGPoint)endPoint;
+- (void) finalizeNewBlockTo:(CGPoint)endPoint;
+
+
+
 @end

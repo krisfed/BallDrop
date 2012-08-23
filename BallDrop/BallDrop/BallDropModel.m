@@ -96,6 +96,34 @@
     [self.blocks addObject:[NSValue value:&newBlock withObjCType:@encode(BallDropBlock)]];
 }
 
+
+// Begin a sequence to draw a new block.
+- (void) startNewBlockFrom:(CGPoint)startPoint
+{
+    [self addBlockFrom:startPoint to:startPoint];
+}
+
+// Continue a sequence to draw a new block.
+- (void) updateNewBlockTo:(CGPoint)endPoint
+{
+    BallDropBlock block;
+    NSValue *lineObject = [self.blocks lastObject];
+    [lineObject getValue:&block];
+    [self.blocks removeLastObject];
+    [self addBlockFrom:block.p1 to:endPoint];
+}
+
+// Finish a sequence to draw a new line. This function finalizes the line endpoint
+- (void) finalizeNewBlockTo:(CGPoint)endPoint
+{
+    BallDropBlock block;
+    NSValue *lineObject = [self.blocks lastObject];
+    [lineObject getValue:&block];
+    [self.blocks removeLastObject];
+    [self addBlockFrom:block.p1 to:endPoint];
+}
+
+
 - (void) updateModel 
 {
     

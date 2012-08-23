@@ -9,7 +9,6 @@
 #import "BallDropViewController.h"
 #import "BallDropStartUpViewController.h"
 #import "BallDropModel.h"
-#import "BallDropSound.h"
 
 #define NUM_BALL_SECTIONS 32
 #define BALL_RADIUS 10
@@ -330,12 +329,28 @@
 
 - (void) handleTap:(UITapGestureRecognizer *) tap
 {
-    NSLog(@"Tap!");
+    
 }
 
+/*
+ Adds a new block
+*/
 - (void) handlePan:(UIPanGestureRecognizer *) pan
 {
-    NSLog(@"Pan Recognized");
+    CGPoint location = [pan locationInView:self.view];
+ 
+    if (pan.state == UIGestureRecognizerStateBegan)
+    {
+        [self.model startNewBlockFrom:location];
+    }
+    else if (pan.state == UIGestureRecognizerStateEnded)
+    {
+        [self.model finalizeNewBlockTo:location];
+    }
+    else if (pan.state == UIGestureRecognizerStateChanged)
+    {
+        [self.model updateNewBlockTo:location];
+    }
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *) touch 
@@ -346,41 +361,25 @@
 
 - (IBAction)newFilePressed:(UIButton *)sender 
 {
-    [BallDropSound makeSoundofType:1 ofNote:0];
+    NSLog(@"new file");
 }
 
 - (IBAction)saveFilePressed:(UIButton *)sender 
 {
-    [BallDropSound makeSoundofType:1 ofNote:2];
+    NSLog(@"save file");
 }
 
 - (IBAction)loadFilePressed:(UIButton *)sender 
 {
-    [BallDropSound makeSoundofType:1 ofNote:5];
-}
-
-- (IBAction)helpPressed:(UIButton *)sender 
-{
-    [BallDropSound makeSoundofType:1 ofNote:7];
-    if (!self.startUpPopover){
-        BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
-        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
-        popover.delegate = self;
-        
-        self.startUpPopover = popover;
-    }
-    
-    
-    [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
+    NSLog(@"load file");
 }
 
 - (IBAction)newBallSourcePressed:(UIButton *)sender 
 {
-    [BallDropSound makeSoundofType:1 ofNote:10];
+    NSLog(@"new ball source");
 }
 
 - (IBAction)playStopPressed:(UIButton *)sender {
-    [BallDropSound makeSoundofType:1 ofNote:12];
     self.isPlaying = !self.isPlaying;
     
     if (self.isPlaying) {
@@ -391,6 +390,19 @@
     }
 }
 
+- (IBAction)helpPressed:(UIButton *)sender 
+{
+    if (!self.startUpPopover){
+        BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
+        popover.delegate = self;
+    
+        self.startUpPopover = popover;
+    }
+    
+    
+    [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
+}
 
 - (void)viewDidUnload
 {
@@ -404,8 +416,6 @@
 	self.context = nil;
     // Release any retained subviews of the main view.
 }
-
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
