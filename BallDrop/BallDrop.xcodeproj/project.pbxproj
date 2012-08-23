@@ -9,6 +9,41 @@
 /* Begin PBXBuildFile section */
 		ED151EDC15E6814700F3966E /* BallDropStartUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED151EDA15E6814700F3966E /* BallDropStartUpViewController.m */; };
 		ED151EDD15E6814700F3966E /* BallDropStartUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED151EDB15E6814700F3966E /* BallDropStartUpViewController.xib */; };
+		ED151F4815E68EC500F3966E /* Bass1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2615E68EC500F3966E /* Bass1.m4a */; };
+		ED151F4915E68EC500F3966E /* Bass2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2715E68EC500F3966E /* Bass2.m4a */; };
+		ED151F4A15E68EC500F3966E /* Bass3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2815E68EC500F3966E /* Bass3.m4a */; };
+		ED151F4B15E68EC500F3966E /* Bass4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2915E68EC500F3966E /* Bass4.m4a */; };
+		ED151F4C15E68EC500F3966E /* Bass5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2A15E68EC500F3966E /* Bass5.m4a */; };
+		ED151F4D15E68EC500F3966E /* Bass6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2B15E68EC500F3966E /* Bass6.m4a */; };
+		ED151F4E15E68EC500F3966E /* Bass7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2C15E68EC500F3966E /* Bass7.m4a */; };
+		ED151F4F15E68EC500F3966E /* Bass8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2D15E68EC500F3966E /* Bass8.m4a */; };
+		ED151F5015E68EC500F3966E /* Bass9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2E15E68EC500F3966E /* Bass9.m4a */; };
+		ED151F5115E68EC500F3966E /* Bass10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F2F15E68EC500F3966E /* Bass10.m4a */; };
+		ED151F5215E68EC500F3966E /* Bass11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3015E68EC500F3966E /* Bass11.m4a */; };
+		ED151F5315E68EC500F3966E /* Bass12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3115E68EC500F3966E /* Bass12.m4a */; };
+		ED151F5415E68EC500F3966E /* Bass13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3215E68EC500F3966E /* Bass13.m4a */; };
+		ED151F5515E68EC500F3966E /* Bell1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3315E68EC500F3966E /* Bell1.m4a */; };
+		ED151F5615E68EC500F3966E /* Bell2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3415E68EC500F3966E /* Bell2.m4a */; };
+		ED151F5715E68EC500F3966E /* Bell3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3515E68EC500F3966E /* Bell3.m4a */; };
+		ED151F5815E68EC500F3966E /* Bell4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3615E68EC500F3966E /* Bell4.m4a */; };
+		ED151F5915E68EC500F3966E /* Bell5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3715E68EC500F3966E /* Bell5.m4a */; };
+		ED151F5A15E68EC500F3966E /* Bell6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3815E68EC500F3966E /* Bell6.m4a */; };
+		ED151F5B15E68EC500F3966E /* Bell7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3915E68EC500F3966E /* Bell7.m4a */; };
+		ED151F5C15E68EC500F3966E /* Bell8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3A15E68EC500F3966E /* Bell8.m4a */; };
+		ED151F5D15E68EC500F3966E /* Bell9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3B15E68EC500F3966E /* Bell9.m4a */; };
+		ED151F5E15E68EC500F3966E /* Bell10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3C15E68EC500F3966E /* Bell10.m4a */; };
+		ED151F5F15E68EC500F3966E /* Bell11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3D15E68EC500F3966E /* Bell11.m4a */; };
+		ED151F6015E68EC500F3966E /* Bell12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3E15E68EC500F3966E /* Bell12.m4a */; };
+		ED151F6115E68EC500F3966E /* Bell13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F3F15E68EC500F3966E /* Bell13.m4a */; };
+		ED151F6215E68EC500F3966E /* Drum0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4015E68EC500F3966E /* Drum0.m4a */; };
+		ED151F6315E68EC500F3966E /* Drum1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4115E68EC500F3966E /* Drum1.m4a */; };
+		ED151F6415E68EC500F3966E /* Drum2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4215E68EC500F3966E /* Drum2.m4a */; };
+		ED151F6515E68EC500F3966E /* Drum3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4315E68EC500F3966E /* Drum3.m4a */; };
+		ED151F6615E68EC500F3966E /* Drum4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4415E68EC500F3966E /* Drum4.m4a */; };
+		ED151F6715E68EC500F3966E /* Drum5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4515E68EC500F3966E /* Drum5.m4a */; };
+		ED151F6815E68EC500F3966E /* Drum6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4615E68EC500F3966E /* Drum6.m4a */; };
+		ED151F6915E68EC500F3966E /* Drum7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED151F4715E68EC500F3966E /* Drum7.m4a */; };
+		ED151F6F15E6918000F3966E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED151F6E15E6918000F3966E /* AudioToolbox.framework */; };
 		EDD581F215E6668D00D211A2 /* BallDropModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F115E6668D00D211A2 /* BallDropModel.m */; };
 		EDD581F615E6677A00D211A2 /* BallDropSound.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F515E6677A00D211A2 /* BallDropSound.m */; };
 		F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE515DA4A32009EFF09 /* UIKit.framework */; };
@@ -27,6 +62,41 @@
 		ED151ED915E6814700F3966E /* BallDropStartUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropStartUpViewController.h; sourceTree = SOURCE_ROOT; };
 		ED151EDA15E6814700F3966E /* BallDropStartUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropStartUpViewController.m; sourceTree = SOURCE_ROOT; };
 		ED151EDB15E6814700F3966E /* BallDropStartUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BallDropStartUpViewController.xib; sourceTree = SOURCE_ROOT; };
+		ED151F2615E68EC500F3966E /* Bass1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass1.m4a; sourceTree = "<group>"; };
+		ED151F2715E68EC500F3966E /* Bass2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass2.m4a; sourceTree = "<group>"; };
+		ED151F2815E68EC500F3966E /* Bass3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass3.m4a; sourceTree = "<group>"; };
+		ED151F2915E68EC500F3966E /* Bass4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass4.m4a; sourceTree = "<group>"; };
+		ED151F2A15E68EC500F3966E /* Bass5.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass5.m4a; sourceTree = "<group>"; };
+		ED151F2B15E68EC500F3966E /* Bass6.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass6.m4a; sourceTree = "<group>"; };
+		ED151F2C15E68EC500F3966E /* Bass7.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass7.m4a; sourceTree = "<group>"; };
+		ED151F2D15E68EC500F3966E /* Bass8.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass8.m4a; sourceTree = "<group>"; };
+		ED151F2E15E68EC500F3966E /* Bass9.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass9.m4a; sourceTree = "<group>"; };
+		ED151F2F15E68EC500F3966E /* Bass10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass10.m4a; sourceTree = "<group>"; };
+		ED151F3015E68EC500F3966E /* Bass11.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass11.m4a; sourceTree = "<group>"; };
+		ED151F3115E68EC500F3966E /* Bass12.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass12.m4a; sourceTree = "<group>"; };
+		ED151F3215E68EC500F3966E /* Bass13.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bass13.m4a; sourceTree = "<group>"; };
+		ED151F3315E68EC500F3966E /* Bell1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell1.m4a; sourceTree = "<group>"; };
+		ED151F3415E68EC500F3966E /* Bell2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell2.m4a; sourceTree = "<group>"; };
+		ED151F3515E68EC500F3966E /* Bell3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell3.m4a; sourceTree = "<group>"; };
+		ED151F3615E68EC500F3966E /* Bell4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell4.m4a; sourceTree = "<group>"; };
+		ED151F3715E68EC500F3966E /* Bell5.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell5.m4a; sourceTree = "<group>"; };
+		ED151F3815E68EC500F3966E /* Bell6.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell6.m4a; sourceTree = "<group>"; };
+		ED151F3915E68EC500F3966E /* Bell7.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell7.m4a; sourceTree = "<group>"; };
+		ED151F3A15E68EC500F3966E /* Bell8.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell8.m4a; sourceTree = "<group>"; };
+		ED151F3B15E68EC500F3966E /* Bell9.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell9.m4a; sourceTree = "<group>"; };
+		ED151F3C15E68EC500F3966E /* Bell10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell10.m4a; sourceTree = "<group>"; };
+		ED151F3D15E68EC500F3966E /* Bell11.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell11.m4a; sourceTree = "<group>"; };
+		ED151F3E15E68EC500F3966E /* Bell12.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell12.m4a; sourceTree = "<group>"; };
+		ED151F3F15E68EC500F3966E /* Bell13.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell13.m4a; sourceTree = "<group>"; };
+		ED151F4015E68EC500F3966E /* Drum0.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum0.m4a; sourceTree = "<group>"; };
+		ED151F4115E68EC500F3966E /* Drum1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum1.m4a; sourceTree = "<group>"; };
+		ED151F4215E68EC500F3966E /* Drum2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum2.m4a; sourceTree = "<group>"; };
+		ED151F4315E68EC500F3966E /* Drum3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum3.m4a; sourceTree = "<group>"; };
+		ED151F4415E68EC500F3966E /* Drum4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum4.m4a; sourceTree = "<group>"; };
+		ED151F4515E68EC500F3966E /* Drum5.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum5.m4a; sourceTree = "<group>"; };
+		ED151F4615E68EC500F3966E /* Drum6.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum6.m4a; sourceTree = "<group>"; };
+		ED151F4715E68EC500F3966E /* Drum7.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Drum7.m4a; sourceTree = "<group>"; };
+		ED151F6E15E6918000F3966E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		EDD581F015E6668D00D211A2 /* BallDropModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropModel.h; sourceTree = "<group>"; };
 		EDD581F115E6668D00D211A2 /* BallDropModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropModel.m; sourceTree = "<group>"; };
 		EDD581F415E6677A00D211A2 /* BallDropSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropSound.h; sourceTree = "<group>"; };
@@ -53,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED151F6F15E6918000F3966E /* AudioToolbox.framework in Frameworks */,
 				F7D50EC215E5BE7300CE05A8 /* GLKit.framework in Frameworks */,
 				F7D50EC315E5BE7300CE05A8 /* OpenGLES.framework in Frameworks */,
 				F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */,
@@ -64,9 +135,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED151F2215E68DF600F3966E /* Sound Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED151F2515E68E3800F3966E /* Bell */,
+				ED151F2415E68E2500F3966E /* Drum */,
+				ED151F2315E68E1900F3966E /* Bass */,
+			);
+			name = "Sound Files";
+			sourceTree = "<group>";
+		};
+		ED151F2315E68E1900F3966E /* Bass */ = {
+			isa = PBXGroup;
+			children = (
+				ED151F2615E68EC500F3966E /* Bass1.m4a */,
+				ED151F2715E68EC500F3966E /* Bass2.m4a */,
+				ED151F2815E68EC500F3966E /* Bass3.m4a */,
+				ED151F2915E68EC500F3966E /* Bass4.m4a */,
+				ED151F2A15E68EC500F3966E /* Bass5.m4a */,
+				ED151F2B15E68EC500F3966E /* Bass6.m4a */,
+				ED151F2C15E68EC500F3966E /* Bass7.m4a */,
+				ED151F2D15E68EC500F3966E /* Bass8.m4a */,
+				ED151F2E15E68EC500F3966E /* Bass9.m4a */,
+				ED151F2F15E68EC500F3966E /* Bass10.m4a */,
+				ED151F3015E68EC500F3966E /* Bass11.m4a */,
+				ED151F3115E68EC500F3966E /* Bass12.m4a */,
+				ED151F3215E68EC500F3966E /* Bass13.m4a */,
+			);
+			name = Bass;
+			sourceTree = "<group>";
+		};
+		ED151F2415E68E2500F3966E /* Drum */ = {
+			isa = PBXGroup;
+			children = (
+				ED151F4015E68EC500F3966E /* Drum0.m4a */,
+				ED151F4115E68EC500F3966E /* Drum1.m4a */,
+				ED151F4215E68EC500F3966E /* Drum2.m4a */,
+				ED151F4315E68EC500F3966E /* Drum3.m4a */,
+				ED151F4415E68EC500F3966E /* Drum4.m4a */,
+				ED151F4515E68EC500F3966E /* Drum5.m4a */,
+				ED151F4615E68EC500F3966E /* Drum6.m4a */,
+				ED151F4715E68EC500F3966E /* Drum7.m4a */,
+			);
+			name = Drum;
+			sourceTree = "<group>";
+		};
+		ED151F2515E68E3800F3966E /* Bell */ = {
+			isa = PBXGroup;
+			children = (
+				ED151F3315E68EC500F3966E /* Bell1.m4a */,
+				ED151F3415E68EC500F3966E /* Bell2.m4a */,
+				ED151F3515E68EC500F3966E /* Bell3.m4a */,
+				ED151F3615E68EC500F3966E /* Bell4.m4a */,
+				ED151F3715E68EC500F3966E /* Bell5.m4a */,
+				ED151F3815E68EC500F3966E /* Bell6.m4a */,
+				ED151F3915E68EC500F3966E /* Bell7.m4a */,
+				ED151F3A15E68EC500F3966E /* Bell8.m4a */,
+				ED151F3B15E68EC500F3966E /* Bell9.m4a */,
+				ED151F3C15E68EC500F3966E /* Bell10.m4a */,
+				ED151F3D15E68EC500F3966E /* Bell11.m4a */,
+				ED151F3E15E68EC500F3966E /* Bell12.m4a */,
+				ED151F3F15E68EC500F3966E /* Bell13.m4a */,
+			);
+			name = Bell;
+			sourceTree = "<group>";
+		};
 		F79DCDD615DA4A32009EFF09 = {
 			isa = PBXGroup;
 			children = (
+				ED151F6E15E6918000F3966E /* AudioToolbox.framework */,
 				F7D50EC015E5BE7300CE05A8 /* GLKit.framework */,
 				F7D50EC115E5BE7300CE05A8 /* OpenGLES.framework */,
 				F79DCDEB15DA4A32009EFF09 /* BallDrop */,
@@ -96,6 +233,7 @@
 		F79DCDEB15DA4A32009EFF09 /* BallDrop */ = {
 			isa = PBXGroup;
 			children = (
+				ED151F2215E68DF600F3966E /* Sound Files */,
 				ED151EDB15E6814700F3966E /* BallDropStartUpViewController.xib */,
 				EDD581F415E6677A00D211A2 /* BallDropSound.h */,
 				EDD581F515E6677A00D211A2 /* BallDropSound.m */,
@@ -178,6 +316,40 @@
 				F79DCDF015DA4A32009EFF09 /* InfoPlist.strings in Resources */,
 				F79DCDF915DA4A32009EFF09 /* MainStoryboard.storyboard in Resources */,
 				ED151EDD15E6814700F3966E /* BallDropStartUpViewController.xib in Resources */,
+				ED151F4815E68EC500F3966E /* Bass1.m4a in Resources */,
+				ED151F4915E68EC500F3966E /* Bass2.m4a in Resources */,
+				ED151F4A15E68EC500F3966E /* Bass3.m4a in Resources */,
+				ED151F4B15E68EC500F3966E /* Bass4.m4a in Resources */,
+				ED151F4C15E68EC500F3966E /* Bass5.m4a in Resources */,
+				ED151F4D15E68EC500F3966E /* Bass6.m4a in Resources */,
+				ED151F4E15E68EC500F3966E /* Bass7.m4a in Resources */,
+				ED151F4F15E68EC500F3966E /* Bass8.m4a in Resources */,
+				ED151F5015E68EC500F3966E /* Bass9.m4a in Resources */,
+				ED151F5115E68EC500F3966E /* Bass10.m4a in Resources */,
+				ED151F5215E68EC500F3966E /* Bass11.m4a in Resources */,
+				ED151F5315E68EC500F3966E /* Bass12.m4a in Resources */,
+				ED151F5415E68EC500F3966E /* Bass13.m4a in Resources */,
+				ED151F5515E68EC500F3966E /* Bell1.m4a in Resources */,
+				ED151F5615E68EC500F3966E /* Bell2.m4a in Resources */,
+				ED151F5715E68EC500F3966E /* Bell3.m4a in Resources */,
+				ED151F5815E68EC500F3966E /* Bell4.m4a in Resources */,
+				ED151F5915E68EC500F3966E /* Bell5.m4a in Resources */,
+				ED151F5A15E68EC500F3966E /* Bell6.m4a in Resources */,
+				ED151F5B15E68EC500F3966E /* Bell7.m4a in Resources */,
+				ED151F5C15E68EC500F3966E /* Bell8.m4a in Resources */,
+				ED151F5D15E68EC500F3966E /* Bell9.m4a in Resources */,
+				ED151F5E15E68EC500F3966E /* Bell10.m4a in Resources */,
+				ED151F5F15E68EC500F3966E /* Bell11.m4a in Resources */,
+				ED151F6015E68EC500F3966E /* Bell12.m4a in Resources */,
+				ED151F6115E68EC500F3966E /* Bell13.m4a in Resources */,
+				ED151F6215E68EC500F3966E /* Drum0.m4a in Resources */,
+				ED151F6315E68EC500F3966E /* Drum1.m4a in Resources */,
+				ED151F6415E68EC500F3966E /* Drum2.m4a in Resources */,
+				ED151F6515E68EC500F3966E /* Drum3.m4a in Resources */,
+				ED151F6615E68EC500F3966E /* Drum4.m4a in Resources */,
+				ED151F6715E68EC500F3966E /* Drum5.m4a in Resources */,
+				ED151F6815E68EC500F3966E /* Drum6.m4a in Resources */,
+				ED151F6915E68EC500F3966E /* Drum7.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

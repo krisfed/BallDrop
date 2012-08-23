@@ -9,6 +9,9 @@
 #import "BallDropViewController.h"
 #import "BallDropStartUpViewController.h"
 #import "BallDropModel.h"
+#import "BallDropSound.h"
+
+#define NUM_BALL_SEGMENTS	32
 
 @interface BallDropViewController ()
 
@@ -105,25 +108,41 @@
 
 - (IBAction)newFilePressed:(UIButton *)sender 
 {
-    NSLog(@"new file");
+    [BallDropSound makeSoundofType:1 ofNote:0];
 }
 
 - (IBAction)saveFilePressed:(UIButton *)sender 
 {
-    NSLog(@"save file");
+    [BallDropSound makeSoundofType:1 ofNote:2];
 }
 
 - (IBAction)loadFilePressed:(UIButton *)sender 
 {
-    NSLog(@"load file");
+    [BallDropSound makeSoundofType:1 ofNote:5];
+}
+
+- (IBAction)helpPressed:(UIButton *)sender 
+{
+    [BallDropSound makeSoundofType:1 ofNote:7];
+    if (!self.startUpPopover){
+        BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
+        popover.delegate = self;
+        
+        self.startUpPopover = popover;
+    }
+    
+    
+    [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
 }
 
 - (IBAction)newBallSourcePressed:(UIButton *)sender 
 {
-    NSLog(@"new ball source");
+    [BallDropSound makeSoundofType:1 ofNote:10];
 }
 
 - (IBAction)playStopPressed:(UIButton *)sender {
+    [BallDropSound makeSoundofType:1 ofNote:12];
     self.isPlaying = !self.isPlaying;
     
     if (self.isPlaying) {
@@ -134,25 +153,14 @@
     }
 }
 
-- (IBAction)helpPressed:(UIButton *)sender 
-{
-    if (!self.startUpPopover){
-        BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
-        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
-        popover.delegate = self;
-    
-        self.startUpPopover = popover;
-    }
-    
-    
-    [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
-}
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
+
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
