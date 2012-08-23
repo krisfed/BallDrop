@@ -20,6 +20,8 @@
 @synthesize collisions = _collisions;
 
 
+
+
 - (NSMutableArray*) balls 
 {
     if (!_balls) {
@@ -52,9 +54,46 @@
     return _collisions;
 }
 
-- (void) initModel 
+- (id) init
 {
+    self = [super init];
+    if (self) {
+        [self addBallAt:CGPointMake(0, 0)];
+        [self addBallAt:CGPointMake(100, 100)];
+        [self addBlockFrom:CGPointMake(200, 200) to:CGPointMake(300, 400)];
+        
+    }
     
+    return self;
+}
+
+/*
+ Add a ball to the model at specified point
+*/
+- (void) addBallAt:(CGPoint)center
+{
+    BallDropBall newBall;
+    newBall.center = CGPointMake(center.x, center.y);
+    newBall.Color[0] = 1;
+    newBall.Color[1] = 0;
+    newBall.Color[2] = 0;
+    newBall.Color[3] = 1;
+    [self.balls addObject:[NSValue value:&newBall withObjCType:@encode(BallDropBall)]];
+}
+
+/*
+ Add a block to the model with specified endpoints
+ */
+- (void) addBlockFrom:(CGPoint)startPoint to:(CGPoint)endPoint
+{
+    BallDropBlock newBlock;
+    newBlock.p1 = startPoint;//CGPointMake(startPoint.x, startPoint.y);
+    newBlock.p2 = endPoint;//CGPointMake(endPoint.x, endPoint.y);
+    newBlock.Color[0] = 1;//(arc4random()%100)/100.0;
+    newBlock.Color[1] = 1;//(arc4random()%100)/100.0;
+    newBlock.Color[2] = 1;//(arc4random()%100)/100.0;
+    newBlock.Color[3] = 1;
+    [self.blocks addObject:[NSValue value:&newBlock withObjCType:@encode(BallDropBlock)]];
 }
 
 - (void) updateModel 

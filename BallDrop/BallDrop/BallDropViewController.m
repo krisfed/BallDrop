@@ -11,7 +11,8 @@
 #import "BallDropModel.h"
 
 #define NUM_BALL_SECTIONS 32
-
+#define BALL_RADIUS 10
+#define BLOCK_RADIUS 6
 
 @interface BallDropViewController ()
 
@@ -47,7 +48,7 @@
 /* 
  Getter for the model with lazy instantiation
 */
-- (BallDropModel *)getModel
+- (BallDropModel *)model
 {
     if (!_model){
         _model = [[BallDropModel alloc] init];
@@ -92,11 +93,11 @@
     
     int width = self.view.bounds.size.width;
     int height = self.view.bounds.size.height;
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, 0, height, 0.0, 1.0);
-//    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, height, 0, 0.0, 1.0); //invert y-axis to match screen coords
+
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, height, 0, 0.0, 1.0); //invert y-axis to match screen coords
     self.effect.transform.projectionMatrix = projectionMatrix;
     
-//    self.viewModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);//origin at the center of the screen
+    //self.viewModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);//origin at the center of the screen
     
     self.viewModelMatrix = GLKMatrix4Identity;
 
@@ -207,31 +208,120 @@
     for (i = 0; i < self.model.balls.count; i++){
         BallDropBall ball;
         [[self.model.balls objectAtIndex:i] getValue:&ball];
-        [self renderBall:&ball];
+        [self renderBall:ball];
     }
     for (i = 0; i < self.model.blocks.count; i++){
         BallDropBlock block;
         [[self.model.blocks objectAtIndex:i] getValue:&block];
-        [self renderBlock:&block];
+        [self renderBlock:block];
     }
     for (i = 0; i < self.model.ballSources.count; i++){
         BallDropBallSource source;
         [[self.model.ballSources objectAtIndex:i] getValue:&source];
-        [self renderBallSource:&source];
+        [self renderBallSource:source];
     }
 }
 
-- (void) renderBall: (BallDropBall *) ball
+- (void) renderBall: (BallDropBall) ball
 {
+    
+    //tranforms to draw current ball:
+    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, ball.center.x, ball.center.y, 0);
+    ballModelMatrix = GLKMatrix4Scale(ballModelMatrix, BALL_RADIUS, BALL_RADIUS, 1);
+    self.effect.transform.modelviewMatrix = ballModelMatrix;
+    [self.effect prepareToDraw];
+    
+    //draw:    
+    GLuint VBO = [self getBallVBOofColor:ball.Color];
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDisableVertexAttribArray(GLKVertexAttribColor);
+    
+    //return to normal:
+    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    [self.effect prepareToDraw];
+}
+
+- (void) renderBlock: (BallDropBlock) block
+{
+    
+    //get color VBOs
+    GLuint circleVBO = [self getBallVBOofColor:block.Color];
+    GLuint rectVBO = [self getRectVBOofColor:block.Color];
+    
+    
+    // block start
+    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p1.x, block.p1.y, 0);
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
+    self.effect.transform.modelviewMatrix = blockModelMatrix;
+    [self.effect prepareToDraw];
+    
+    glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //line end
+    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p2.x, block.p2.y, 0);
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
+    self.effect.transform.modelviewMatrix = blockModelMatrix;
+    [self.effect prepareToDraw];
+    
+    glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    
+    //block body
+    float dx = block.p2.x - block.p1.x;
+    float dy = block.p2.y - block.p1.y;
+    //translate to block center
+    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p1.x + dx/2, block.p1.y + dy/2, 0);
+    //rotate to block's angle
+    blockModelMatrix = GLKMatrix4RotateZ(blockModelMatrix, atanf(dy/dx));
+    //stretch to block size
+    float blockLength = sqrtf( powf(dx, 2) + powf(dy, 2));
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, blockLength, BLOCK_RADIUS*2, 1);
+    
+    //draw
+    self.effect.transform.modelviewMatrix = blockModelMatrix;
+    [self.effect prepareToDraw];
+    
+    glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //return to normal:
+    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    [self.effect prepareToDraw];
     
 }
 
-- (void) renderBlock: (BallDropBlock *) block
-{
-    
-}
-
-- (void) renderBallSource: (BallDropBallSource *) source
+- (void) renderBallSource: (BallDropBallSource) source
 {
     
 }
