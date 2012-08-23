@@ -56,9 +56,6 @@
 {
     self = [super init];
     if (self) {
-        [self addBallAt:CGPointMake(0, 0)];
-        [self addBallAt:CGPointMake(100, 100)];
-        [self addBlockFrom:CGPointMake(200, 200) to:CGPointMake(300, 400)];
         
     }
     

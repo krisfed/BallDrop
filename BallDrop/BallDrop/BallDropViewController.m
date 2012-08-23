@@ -11,6 +11,7 @@
 #import "BallDropModel.h"
 
 #define NUM_BALL_SECTIONS 32
+#define MAX_NUM_BALLS 10
 #define BALL_RADIUS 10
 #define BLOCK_RADIUS 3
 
@@ -23,6 +24,8 @@
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) id selectedItem;
+@property (nonatomic) int beatCounter;
+@property (nonatomic) int updateCounter;
 
 
 
@@ -44,6 +47,8 @@
 @synthesize effect = _effect;
 @synthesize viewModelMatrix = _viewModelMatrix;
 @synthesize startUpPopover = _startUpPopover;
+@synthesize beatCounter = _beatCounter;
+@synthesize updateCounter = _updateCounter;
 
 /* 
  Getter for the model with lazy instantiation
@@ -363,6 +368,7 @@
 - (IBAction)newFilePressed:(UIButton *)sender 
 {
     NSLog(@"new file");
+    self.model = [[BallDropModel alloc] init];
 }
 
 - (IBAction)saveFilePressed:(UIButton *)sender 
@@ -388,6 +394,8 @@
     }
     else {
         [sender setTitle:@"▷" forState:UIControlStateNormal];
+        self.beatCounter = 0;
+        self.updateCounter = 0;
     }
 }
 
@@ -437,6 +445,30 @@
 
 - (void)update
 {
+    if (self.isPlaying)
+    {
+        if (self.updateCounter >= 15){
+            self.beatCounter++;
+            self.updateCounter = 0;
+        }
+        int i;
+        for (i = 0; i < self.model.ballSources.count; i++){
+            BallDropBallSource source;
+            [[self.model.ballSources objectAtIndex:i] getValue:&source];
+            if ((self.model.balls.count < MAX_NUM_BALLS)
+                &&((self.beatCounter % source.period) == 0)){
+                [self.model addBallAt:CGPointMake(source.xpos, 20)];
+            }
+        }   
+        
+        for (i = 0; i < self.model.balls.count; i++){
+            BallDropBall ball;
+            [[self.model.balls objectAtIndex:i] getValue:&ball];
+            ball.vy = ball.vy - 0.1;
+            
+            [self.model.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BallDropBall)]];
+        }
+    }    
     
 }
 
