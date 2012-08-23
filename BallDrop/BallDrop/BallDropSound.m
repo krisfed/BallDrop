@@ -17,7 +17,7 @@
         NSLog(@"Invalid Sound File");
         return;
     }
-    note++;
+    note++; 
     NSMutableString *soundName;
     switch (soundType){
         case 0:
