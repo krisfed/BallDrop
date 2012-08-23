@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BallDropViewController : UIViewController
+@interface BallDropViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @end
