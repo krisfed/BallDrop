@@ -10,4 +10,6 @@
 
 @interface BallDropSound : NSObject
 
++ (void) makeSoundofType: (int)soundType ofNote: (int)note;
+
 @end
