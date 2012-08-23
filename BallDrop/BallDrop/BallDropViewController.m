@@ -100,11 +100,15 @@
 
 - (IBAction)helpPressed:(UIButton *)sender 
 {
-    BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
-    popover.delegate = self;
+    if (!self.startUpPopover){
+        BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
+        popover.delegate = self;
     
-    self.startUpPopover = popover;
+        self.startUpPopover = popover;
+    }
+    
+    
     [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
 }
 
