@@ -10,4 +10,30 @@
 
 @interface BallDropModel : NSObject
 
+typedef struct {
+    CGPoint center;
+    float vx;
+    float vy;
+    float Color[4];
+} BallDropBall;
+
+typedef struct {
+    CGPoint p1;
+    CGPoint p2;
+    int soundType;
+    int note;
+    float Color[4];
+} BallDropBlock;
+
+typedef struct {
+    float xpos;
+    int period; //number of time ticks it waits to release each ball
+    BOOL showBallPath;
+} BallDropBallSource;
+
+@property (nonatomic, strong)NSMutableArray *balls;
+@property (nonatomic, strong)NSMutableArray *blocks;
+@property (nonatomic, strong)NSMutableArray *ballSources;
+@property (nonatomic, strong)NSMutableArray *collisions;
+
 @end

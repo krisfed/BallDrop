@@ -10,12 +10,6 @@
 
 @interface BallDropModel ()
 
-@property (nonatomic, strong)NSMutableArray *balls;
-@property (nonatomic, strong)NSMutableArray *blocks;
-@property (nonatomic, strong)NSMutableArray *ballSources;
-@property (nonatomic, strong)NSMutableArray *collisions;
-
-
 @end
 
 @implementation BallDropModel

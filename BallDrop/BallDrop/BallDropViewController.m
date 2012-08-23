@@ -51,6 +51,42 @@
     [self.view addGestureRecognizer:pan];
 }
 
+- (void) renderModel
+{
+    int i;
+    for (i = 0; i < self.model.balls.count; i++){
+        BallDropBall ball;
+        [[self.model.balls objectAtIndex:i] getValue:&ball];
+        [self renderBall:&ball];
+    }
+    for (i = 0; i < self.model.blocks.count; i++){
+        BallDropBlock block;
+        [[self.model.blocks objectAtIndex:i] getValue:&block];
+        [self renderBlock:&block];
+    }
+    for (i = 0; i < self.model.ballSources.count; i++){
+        BallDropBallSource source;
+        [[self.model.ballSources objectAtIndex:i] getValue:&source];
+        [self renderBallSource:&source];
+    }
+}
+
+- (void) renderBall: (BallDropBall *) ball
+{
+    
+}
+
+- (void) renderBlock: (BallDropBlock *) block
+{
+    
+}
+
+- (void) renderBallSource: (BallDropBallSource *) source
+{
+    
+}
+
+
 - (void) handleTap:(UITapGestureRecognizer *) tap
 {
     NSLog(@"Tap!");
