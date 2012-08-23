@@ -11,8 +11,6 @@
 #import "BallDropModel.h"
 #import "BallDropSound.h"
 
-#define NUM_BALL_SEGMENTS	32
-
 #define NUM_BALL_SECTIONS 32
 #define BALL_RADIUS 10
 #define BLOCK_RADIUS 6
