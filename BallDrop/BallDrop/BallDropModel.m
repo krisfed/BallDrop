@@ -56,6 +56,7 @@
 {
     self = [super init];
     if (self) {
+        [self addBallSourceAt:100];
         
     }
     

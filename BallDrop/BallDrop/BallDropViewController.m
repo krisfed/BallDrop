@@ -14,6 +14,7 @@
 #define MAX_NUM_BALLS 10
 #define BALL_RADIUS 10
 #define BLOCK_RADIUS 3
+#define SOURCE_SIZE 25
 
 @interface BallDropViewController ()
 
@@ -333,7 +334,7 @@
     GLuint rectVBO = [self getRectVBOofColor: defaultSourceColor];
     
     //tranforms to draw current source:
-    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, source.xpos - SOURCE_SIZE/2, SOURCE_SIZE/2, 0);
+    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, source.xpos, SOURCE_SIZE/2, 0);
     sourceModelMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE, SOURCE_SIZE, 1);
     self.effect.transform.modelviewMatrix = sourceModelMatrix;
     [self.effect prepareToDraw];
@@ -470,25 +471,27 @@
 {
     if (self.isPlaying)
     {
+        self.updateCounter++;
+        int i;
         if (self.updateCounter >= 15){
             self.beatCounter++;
             self.updateCounter = 0;
+           
+            for (i = 0; i < self.model.ballSources.count; i++){
+                BallDropBallSource source;
+                [[self.model.ballSources objectAtIndex:i] getValue:&source];
+                if ((self.model.balls.count < MAX_NUM_BALLS)
+                    &&((self.beatCounter % source.period) == 0)){
+                    [self.model addBallAt:CGPointMake(source.xpos, 0)];
+                }
+            }   
         }
-        int i;
-        for (i = 0; i < self.model.ballSources.count; i++){
-            BallDropBallSource source;
-            [[self.model.ballSources objectAtIndex:i] getValue:&source];
-            if ((self.model.balls.count < MAX_NUM_BALLS)
-                &&((self.beatCounter % source.period) == 0)){
-                [self.model addBallAt:CGPointMake(source.xpos, 20)];
-            }
-        }   
         
         for (i = 0; i < self.model.balls.count; i++){
             BallDropBall ball;
             [[self.model.balls objectAtIndex:i] getValue:&ball];
-            ball.vy = ball.vy - 0.1;
-            
+            ball.vy = ball.vy + 0.1;
+            ball.center.y = ball.center.y + ball.vy;
             [self.model.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BallDropBall)]];
         }
     }    

@@ -47,6 +47,7 @@ typedef struct {
 - (void) updateNewBlockTo:(CGPoint)endPoint;
 - (void) finalizeNewBlockTo:(CGPoint)endPoint;
 - (void) addBallAt:(CGPoint)center;
+- (void) addBallSourceAt:(CGFloat) xpos;
 
 
 @end
