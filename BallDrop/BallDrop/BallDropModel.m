@@ -102,8 +102,8 @@
 - (void) updateNewBlockTo:(CGPoint)endPoint
 {
     BallDropBlock block;
-    NSValue *lineObject = [self.blocks lastObject];
-    [lineObject getValue:&block];
+    NSValue *blockObject = [self.blocks lastObject];
+    [blockObject getValue:&block];
     [self.blocks removeLastObject];
     [self addBlockFrom:block.p1 to:endPoint];
 }
@@ -112,12 +112,22 @@
 - (void) finalizeNewBlockTo:(CGPoint)endPoint
 {
     BallDropBlock block;
-    NSValue *lineObject = [self.blocks lastObject];
-    [lineObject getValue:&block];
+    NSValue *blockObject = [self.blocks lastObject];
+    [blockObject getValue:&block];
     [self.blocks removeLastObject];
     [self addBlockFrom:block.p1 to:endPoint];
 }
 
+
+//Adds a ball source
+- (void)addBallSourceAt:(CGFloat) xpos
+{   
+    BallDropBallSource newSource;
+    newSource.xpos = xpos;
+    newSource.period = 8; 
+    newSource.showBallPath = NO;
+    [self.ballSources addObject:[NSValue value:&newSource withObjCType:@encode(BallDropBallSource)]];
+}
 
 - (void) updateModel 
 {

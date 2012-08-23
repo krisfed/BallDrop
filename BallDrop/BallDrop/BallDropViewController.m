@@ -329,6 +329,29 @@
 
 - (void) renderBallSource: (BallDropBallSource) source
 {
+    float defaultSourceColor[4] = {0, 0, 0, 1};
+    GLuint rectVBO = [self getRectVBOofColor: defaultSourceColor];
+    
+    //tranforms to draw current source:
+    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, source.xpos - SOURCE_SIZE/2, SOURCE_SIZE/2, 0);
+    sourceModelMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE, SOURCE_SIZE, 1);
+    self.effect.transform.modelviewMatrix = sourceModelMatrix;
+    [self.effect prepareToDraw];
+    
+    //draw
+    glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //return to normal:
+    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    [self.effect prepareToDraw];
     
 }
 
