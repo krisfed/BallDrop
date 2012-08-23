@@ -20,8 +20,6 @@
 @synthesize collisions = _collisions;
 
 
-
-
 - (NSMutableArray*) balls 
 {
     if (!_balls) {

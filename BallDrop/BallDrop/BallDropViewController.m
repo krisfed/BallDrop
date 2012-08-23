@@ -13,7 +13,7 @@
 
 #define NUM_BALL_SECTIONS 32
 #define BALL_RADIUS 10
-#define BLOCK_RADIUS 6
+#define BLOCK_RADIUS 3
 
 @interface BallDropViewController ()
 
@@ -82,6 +82,7 @@
     pan.delegate = self;
     [self.view addGestureRecognizer:pan];
     
+    self.preferredFramesPerSecond = 30;
     
     [self setupGL];
 }
@@ -424,10 +425,10 @@
 
 #pragma mark - GLKView and GLKViewController delegate methods
 
-//- (void)update
-//{
-//    
-//}
+- (void)update
+{
+    
+}
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
