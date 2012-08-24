@@ -48,10 +48,10 @@ typedef struct {
 } BDHalfPlane;
 
 
-@property (nonatomic, strong)NSMutableArray *balls;
-@property (nonatomic, strong)NSMutableArray *blocks;
-@property (nonatomic, strong)NSMutableArray *ballSources;
-@property (nonatomic, strong)NSMutableArray *collisions;
+@property (nonatomic, strong) NSMutableArray *balls;
+@property (nonatomic, strong) NSMutableArray *blocks;
+@property (nonatomic, strong) NSMutableArray *ballSources;
+@property (nonatomic, strong) NSMutableArray *collisions;
 
 
 
@@ -61,6 +61,7 @@ typedef struct {
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
 - (void) advanceModelState:(float) deltaT;
+- (void) setHalfPlanes: (BDHalfPlane) plane0: (BDHalfPlane) plane1: (BDHalfPlane) plane2: (BDHalfPlane) plane3;
 
 
 @end

@@ -8,9 +8,12 @@
 
 #import "BallDropModel.h"
 #import "BallDropPhysics.h"
+#import "BallDropSound.h"
 
 @interface BallDropModel ()
-
+{
+    BDHalfPlane _halfPlanes[4];
+}
 @end
 
 @implementation BallDropModel
@@ -19,7 +22,6 @@
 @synthesize blocks = _blocks;
 @synthesize ballSources = _ballSources;
 @synthesize collisions = _collisions;
-
 
 - (NSMutableArray*) balls 
 {
@@ -51,6 +53,13 @@
         _collisions = [[NSMutableArray alloc] init];
     }
     return _collisions;
+}
+
+- (void) setHalfPlanes: (BDHalfPlane) plane0: (BDHalfPlane) plane1: (BDHalfPlane) plane2: (BDHalfPlane) plane3 {
+    _halfPlanes[0] = plane0;
+    _halfPlanes[1] = plane1;
+    _halfPlanes[2] = plane2;
+    _halfPlanes[3] = plane3;    
 }
 
 - (id) init
@@ -93,6 +102,39 @@
     newBlock.Color[1] = 0.2;//(arc4random()%100)/100.0;
     newBlock.Color[2] = 0.2;//(arc4random()%100)/100.0;
     newBlock.Color[3] = 1;
+    
+    int harmonicNote = (arc4random() % 6); //randomly generates a harmonic note and
+    //assign the key accordingly
+    switch (harmonicNote) {
+        case 0:
+            newBlock.note = 0;
+            break;
+        case 1:
+            newBlock.note = 2;
+            break;
+        case 2:
+            newBlock.note = 5;
+            break;
+        case 3:
+            newBlock.note = 7;
+            break;
+        case 4:
+            newBlock.note = 9;
+            break;
+        case 5:
+            newBlock.note = 12;
+            break;
+    }
+    
+    newBlock.soundType = 1;
+    
+    float dx = endPoint.x - startPoint.x;
+    float dy = endPoint.y - startPoint.y;
+    
+    newBlock.angle = atan2f(dy,dx);
+    newBlock.length = sqrtf(dx*dx + dy*dy);
+    newBlock.width = 2*BLOCK_RADIUS;
+    
     [self.blocks addObject:[NSValue value:&newBlock withObjCType:@encode(BDBlock)]];
 }
 
@@ -195,26 +237,27 @@
             [[self.balls objectAtIndex:i] getValue:&ballB];
 			force = bdDetectBallBallCollision(&ballA, &ballB, deltaT, collisionPt);
 			if (force > 0) {
-				NSLog(@"collsion");
+				NSLog(@"ball collsion");
 			}
             [self.balls replaceObjectAtIndex:i withObject:[NSValue value:&ballB withObjCType:@encode(BDBall)]];
 		}
         [self.balls replaceObjectAtIndex:j withObject:[NSValue value:&ballA withObjCType:@encode(BDBall)]];
 	}
     
-/*    
+    
 	//----Test for and respond to collisions with the walls of the display window
-	for (j = 0; j < model->numBalls; j++) {
-		BDBall *ball = &(model->balls[j]);
-		for (i = 0; i < model->numWalls; i++) {
-			BDHalfPlane *wall = &(model->walls[i]);
-			force = bdDetectBallHalfPlaneCollision(ball, wall, deltaT, collisionPt);
+	for (j = 0; j < self.balls.count; j++) {
+		BDBall ball;
+        [[self.balls objectAtIndex:j] getValue:&ball];
+		for (i = 0; i < 4; i++) {
+			force = bdDetectBallHalfPlaneCollision(&ball, &(_halfPlanes[i]), deltaT, collisionPt);
 			if (force > 0) {
 				// Add requests to play sound and render collision effect to the model
 			}
 		}
+        [self.balls replaceObjectAtIndex:j withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
 	}
-*/    
+   
     
 	//----Test for and respond to collisions between balls and blocks
 	for (j = 0; j < self.balls.count; j++) {
@@ -224,9 +267,8 @@
 			BDBlock block;
             [[self.blocks objectAtIndex:i] getValue:&block];
 			force = bdDetectBallBlockCollision(&ball, &block, deltaT, collisionPt);
-			if (force > 0) {
-                NSLog(@"collision");
-				// Add requests to play sound and render collision effect to the model
+			if (force > 0.2) {
+                [BallDropSound makeSoundofType:block.soundType ofNote:block.note];
 			}
 		}
         [self.balls replaceObjectAtIndex:j withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];

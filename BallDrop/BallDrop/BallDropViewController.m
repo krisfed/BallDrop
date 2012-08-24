@@ -54,6 +54,31 @@
 {
     if (!_model){
         _model = [[BallDropModel alloc] init];
+        
+        BDHalfPlane rightPlane;
+        BDHalfPlane leftPlane;
+        BDHalfPlane topPlane;
+        BDHalfPlane bottomPlane;
+        
+        rightPlane.pointOnPlane[0] = self.view.bounds.size.width;
+        rightPlane.pointOnPlane[1] = 0;
+        leftPlane.pointOnPlane[0] = 0;
+        leftPlane.pointOnPlane[1] = 0;
+        topPlane.pointOnPlane[0] = 0;
+        topPlane.pointOnPlane[1] = self.view.bounds.size.height;
+        bottomPlane.pointOnPlane[0] = 0;
+        bottomPlane.pointOnPlane[1] = 0;
+        
+        rightPlane.outwardUnitNormal[0] = -1;
+        rightPlane.outwardUnitNormal[1] = 0;
+        leftPlane.outwardUnitNormal[0] = 1;
+        leftPlane.outwardUnitNormal[1] = 0;
+        topPlane.outwardUnitNormal[0] = 0;
+        topPlane.outwardUnitNormal[1] = -1;
+        bottomPlane.outwardUnitNormal[0] = 0;
+        bottomPlane.outwardUnitNormal[1] = 1;
+        
+        [_model setHalfPlanes:rightPlane :leftPlane :topPlane :bottomPlane];
     }
     return _model;
 }
@@ -99,7 +124,7 @@
     int width = self.view.bounds.size.width;
     int height = self.view.bounds.size.height;
 
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, height, 0, 0.0, 1.0); //invert y-axis to match screen coords
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, 0, height, 0.0, 1.0); //invert y-axis to match screen coords
     self.effect.transform.projectionMatrix = projectionMatrix;
 
     [self.effect prepareToDraw];
@@ -331,7 +356,7 @@
     GLuint rectVBO = [self getRectVBOofColor: defaultSourceColor];
     
     //tranforms to draw current source:
-    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, SOURCE_SIZE/2, 0);
+    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, self.view.bounds.size.height - SOURCE_SIZE/2, 0);
     sourceModelMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE, SOURCE_SIZE, 1);
     self.effect.transform.modelviewMatrix = sourceModelMatrix;
     [self.effect prepareToDraw];
@@ -356,7 +381,8 @@
 
 - (void) handleTap:(UITapGestureRecognizer *) tap
 {
-    
+    CGPoint location = [tap locationInView:self.view];
+    location.y = self.view.bounds.size.height - location.y;
 }
 
 /*
@@ -365,6 +391,7 @@
 - (void) handlePan:(UIPanGestureRecognizer *) pan
 {
     CGPoint location = [pan locationInView:self.view];
+    location.y = self.view.bounds.size.height - location.y;
  
     if (pan.state == UIGestureRecognizerStateBegan)
     {
@@ -394,7 +421,7 @@
 - (IBAction)newFilePressed:(UIButton *)sender 
 {
     NSLog(@"new file");
-    self.model = [[BallDropModel alloc] init];
+    if (!self.isPlaying){self.model = [[BallDropModel alloc] init];}
 }
 
 - (IBAction)saveFilePressed:(UIButton *)sender 
@@ -474,27 +501,18 @@
             self.updateCounter = 0;
         }
         if (self.updateCounter == 0) {
-            NSLog(@"hello");
             for (i = 0; i < self.model.ballSources.count; i++){
                 BDBallSource source;
                 [[self.model.ballSources objectAtIndex:i] getValue:&source];
                 if ((self.model.balls.count < MAX_NUM_BALLS)
                     &&((self.beatCounter % source.period) == 0)){
-                    [self.model addBallAt:CGPointMake(source.xpos, 0)];
+                    [self.model addBallAt:CGPointMake(source.xpos, self.view.bounds.size.height)];
                 }
             }   
             self.beatCounter++;
         }
         
         [self.model advanceModelState:0.033];
-        
-        /*for (i = 0; i < self.model.balls.count; i++){
-            BDBall ball;
-            [[self.model.balls objectAtIndex:i] getValue:&ball];
-            ball.velocity[1] = ball.velocity[1] + 0.1;
-            ball.centerPoint[1] = ball.centerPoint[1] + ball.velocity[1];
-            [self.model.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
-        }*/
     }    
     self.updateCounter++;
 }
