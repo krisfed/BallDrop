@@ -421,7 +421,11 @@
 - (IBAction)newFilePressed:(UIButton *)sender 
 {
     NSLog(@"new file");
-    if (!self.isPlaying){self.model = [[BallDropModel alloc] init];}
+    if (!self.isPlaying)
+    {
+        self.model = nil;//[[BallDropModel alloc] init];
+        
+    }
 }
 
 - (IBAction)saveFilePressed:(UIButton *)sender 
