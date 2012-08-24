@@ -230,7 +230,7 @@
 {
     
     //tranforms to draw current ball:
-    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, ball.centerPoint[0], ball.centerPoint[1], 0);
+    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, ball.centerPoint[0], ball.centerPoint[1], 0);
     ballModelMatrix = GLKMatrix4Scale(ballModelMatrix, BALL_RADIUS, BALL_RADIUS, 1);
     self.effect.transform.modelviewMatrix = ballModelMatrix;
     [self.effect prepareToDraw];
@@ -262,7 +262,7 @@
     
     
     // block start
-    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.startPoint[0], block.startPoint[1], 0);
+    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -278,7 +278,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //line end
-    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.startPoint[0], block.startPoint[1], 0);
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -298,7 +298,7 @@
     float dx = block.endPoint[0] - block.startPoint[0];
     float dy = block.endPoint[1] - block.startPoint[1];
     //translate to block center
-    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.startPoint[0] + dx/2, block.startPoint[1] + dy/2, 0);
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0] + dx/2, block.startPoint[1] + dy/2, 0);
     //rotate to block's angle
     blockModelMatrix = GLKMatrix4RotateZ(blockModelMatrix, atanf(dy/dx));
     //stretch to block size
