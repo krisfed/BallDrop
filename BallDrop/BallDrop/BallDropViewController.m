@@ -21,7 +21,6 @@
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) BallDropModel *model;
 @property (strong, nonatomic) GLKBaseEffect *effect;
-@property (nonatomic) GLKMatrix4 viewModelMatrix; //how everything should be rendered normally
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) id selectedItem;
@@ -46,7 +45,6 @@
 @synthesize selectedItem = _selectedItem;
 @synthesize context = _context;
 @synthesize effect = _effect;
-@synthesize viewModelMatrix = _viewModelMatrix;
 @synthesize startUpPopover = _startUpPopover;
 @synthesize beatCounter = _beatCounter;
 @synthesize updateCounter = _updateCounter;
@@ -103,12 +101,7 @@
 
     GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, height, 0, 0.0, 1.0); //invert y-axis to match screen coords
     self.effect.transform.projectionMatrix = projectionMatrix;
-    
-    //self.viewModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);//origin at the center of the screen
-    
-    self.viewModelMatrix = GLKMatrix4Identity;
 
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix;
     [self.effect prepareToDraw];
     
 }
@@ -240,7 +233,7 @@
 {
     
     //tranforms to draw current ball:
-    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, ball.center.x, ball.center.y, 0);
+    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, ball.center.x, ball.center.y, 0);
     ballModelMatrix = GLKMatrix4Scale(ballModelMatrix, BALL_RADIUS, BALL_RADIUS, 1);
     self.effect.transform.modelviewMatrix = ballModelMatrix;
     [self.effect prepareToDraw];
@@ -259,7 +252,7 @@
     glDisableVertexAttribArray(GLKVertexAttribColor);
     
     //return to normal:
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
     [self.effect prepareToDraw];
 }
 
@@ -275,7 +268,7 @@
     
     
     // block start
-    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p1.x, block.p1.y, 0);
+    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.p1.x, block.p1.y, 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -291,7 +284,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //line end
-    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p2.x, block.p2.y, 0);
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.p2.x, block.p2.y, 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -311,7 +304,7 @@
     float dx = block.p2.x - block.p1.x;
     float dy = block.p2.y - block.p1.y;
     //translate to block center
-    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p1.x + dx/2, block.p1.y + dy/2, 0);
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.p1.x + dx/2, block.p1.y + dy/2, 0);
     //rotate to block's angle
     blockModelMatrix = GLKMatrix4RotateZ(blockModelMatrix, atanf(dy/dx));
     //stretch to block size
@@ -333,7 +326,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //return to normal:
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
     [self.effect prepareToDraw];
     
 }
@@ -349,7 +342,7 @@
     GLuint rectVBO = [self getRectVBOofColor: defaultSourceColor];
     
     //tranforms to draw current source:
-    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, source.xpos, SOURCE_SIZE/2, 0);
+    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, SOURCE_SIZE/2, 0);
     sourceModelMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE, SOURCE_SIZE, 1);
     self.effect.transform.modelviewMatrix = sourceModelMatrix;
     [self.effect prepareToDraw];
@@ -366,7 +359,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //return to normal:
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
     [self.effect prepareToDraw];
     
 }
