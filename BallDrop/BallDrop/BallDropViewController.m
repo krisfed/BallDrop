@@ -12,8 +12,6 @@
 
 #define NUM_BALL_SECTIONS 32
 #define MAX_NUM_BALLS 10
-#define BALL_RADIUS 10
-#define BLOCK_RADIUS 3
 #define SOURCE_SIZE 25
 
 @interface BallDropViewController ()
@@ -213,27 +211,27 @@
 {
     int i;
     for (i = 0; i < self.model.balls.count; i++){
-        BallDropBall ball;
+        BDBall ball;
         [[self.model.balls objectAtIndex:i] getValue:&ball];
         [self renderBall:ball];
     }
     for (i = 0; i < self.model.blocks.count; i++){
-        BallDropBlock block;
+        BDBlock block;
         [[self.model.blocks objectAtIndex:i] getValue:&block];
         [self renderBlock:block];
     }
     for (i = 0; i < self.model.ballSources.count; i++){
-        BallDropBallSource source;
+        BDBallSource source;
         [[self.model.ballSources objectAtIndex:i] getValue:&source];
         [self renderBallSource:source];
     }
 }
 
-- (void) renderBall: (BallDropBall) ball
+- (void) renderBall: (BDBall) ball
 {
     
     //tranforms to draw current ball:
-    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, ball.center.x, ball.center.y, 0);
+    GLKMatrix4 ballModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, ball.centerPoint[0], ball.centerPoint[1], 0);
     ballModelMatrix = GLKMatrix4Scale(ballModelMatrix, BALL_RADIUS, BALL_RADIUS, 1);
     self.effect.transform.modelviewMatrix = ballModelMatrix;
     [self.effect prepareToDraw];
@@ -256,7 +254,7 @@
     [self.effect prepareToDraw];
 }
 
-- (void) renderBlock: (BallDropBlock) block
+- (void) renderBlock: (BDBlock) block
 {
     
     //get color VBOs
@@ -265,7 +263,7 @@
     
     
     // block start
-    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p1.x, block.p1.y, 0);
+    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.startPoint[0], block.startPoint[1], 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -281,7 +279,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //line end
-    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p2.x, block.p2.y, 0);
+    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.startPoint[0], block.startPoint[1], 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -298,10 +296,10 @@
     
     
     //block body
-    float dx = block.p2.x - block.p1.x;
-    float dy = block.p2.y - block.p1.y;
+    float dx = block.endPoint[0] - block.startPoint[0];
+    float dy = block.endPoint[1] - block.startPoint[1];
     //translate to block center
-    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.p1.x + dx/2, block.p1.y + dy/2, 0);
+    blockModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, block.startPoint[0] + dx/2, block.startPoint[1] + dy/2, 0);
     //rotate to block's angle
     blockModelMatrix = GLKMatrix4RotateZ(blockModelMatrix, atanf(dy/dx));
     //stretch to block size
@@ -328,7 +326,7 @@
     
 }
 
-- (void) renderBallSource: (BallDropBallSource) source
+- (void) renderBallSource: (BDBallSource) source
 {
     float defaultSourceColor[4] = {0, 0, 0, 1};
     GLuint rectVBO = [self getRectVBOofColor: defaultSourceColor];
@@ -415,11 +413,13 @@
     
     if (self.isPlaying) {
         [sender setTitle:@"□" forState:UIControlStateNormal];
+        self.model.balls = [[NSMutableArray alloc] init];
     }
     else {
         [sender setTitle:@"▷" forState:UIControlStateNormal];
         self.beatCounter = 0;
         self.updateCounter = 0;
+        self.model.balls = [[NSMutableArray alloc] init];
     }
 }
 
@@ -471,37 +471,40 @@
 {
     if (self.isPlaying)
     {
-        self.updateCounter++;
         int i;
         if (self.updateCounter >= 15){
-            self.beatCounter++;
             self.updateCounter = 0;
-           
+        }
+        if (self.updateCounter == 0) {
+            NSLog(@"hello");
             for (i = 0; i < self.model.ballSources.count; i++){
-                BallDropBallSource source;
+                BDBallSource source;
                 [[self.model.ballSources objectAtIndex:i] getValue:&source];
                 if ((self.model.balls.count < MAX_NUM_BALLS)
                     &&((self.beatCounter % source.period) == 0)){
                     [self.model addBallAt:CGPointMake(source.xpos, 0)];
                 }
             }   
+            self.beatCounter++;
         }
         
-        for (i = 0; i < self.model.balls.count; i++){
-            BallDropBall ball;
+        [self.model advanceModelState:0.033];
+        
+        /*for (i = 0; i < self.model.balls.count; i++){
+            BDBall ball;
             [[self.model.balls objectAtIndex:i] getValue:&ball];
-            ball.vy = ball.vy + 0.1;
-            ball.center.y = ball.center.y + ball.vy;
-            [self.model.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BallDropBall)]];
-        }
+            ball.velocity[1] = ball.velocity[1] + 0.1;
+            ball.centerPoint[1] = ball.centerPoint[1] + ball.velocity[1];
+            [self.model.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
+        }*/
     }    
-    
+    self.updateCounter++;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     
-    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
     [self renderModel];

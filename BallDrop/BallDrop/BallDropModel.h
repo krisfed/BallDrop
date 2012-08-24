@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define BALL_RADIUS 10
+#define BLOCK_RADIUS 3
+
 @interface BallDropModel : NSObject
 
 typedef struct {
@@ -16,25 +19,34 @@ typedef struct {
 } Vertex;
 
 typedef struct {
-    CGPoint center;
-    float vx;
-    float vy;
+    float centerPoint[2];	// Ball center point
+	float velocity[2];		// Ball velocity
+	float radius;			// Ball radius
     float Color[4];
-} BallDropBall;
+} BDBall;
 
 typedef struct {
-    CGPoint p1;
-    CGPoint p2;
+    float startPoint[2]; // Block first end point
+	float endPoint[2];	 // Block second end point
+	float width;		 // Block width
+	float length;		 // Distance between end points; Required by physics simulator
+	float angle;		 // Angle from horizontal; Required by physics simulator
     int soundType;
     int note;
     float Color[4];
-} BallDropBlock;
+} BDBlock;
 
 typedef struct {
     float xpos;
     int period; //number of time ticks it waits to release each ball
     BOOL showBallPath;
-} BallDropBallSource;
+} BDBallSource;
+
+typedef struct {
+	float pointOnPlane[2];		// A point on the half plane
+	float outwardUnitNormal[2];	// Outward normal of half plane; must have length one
+} BDHalfPlane;
+
 
 @property (nonatomic, strong)NSMutableArray *balls;
 @property (nonatomic, strong)NSMutableArray *blocks;
@@ -48,6 +60,7 @@ typedef struct {
 - (void) finalizeNewBlockTo:(CGPoint)endPoint;
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
+- (void) advanceModelState:(float) deltaT;
 
 
 @end
