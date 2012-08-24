@@ -19,7 +19,6 @@
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) BallDropModel *model;
 @property (strong, nonatomic) GLKBaseEffect *effect;
-@property (nonatomic) GLKMatrix4 viewModelMatrix; //how everything should be rendered normally
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) id selectedItem;
@@ -44,7 +43,6 @@
 @synthesize selectedItem = _selectedItem;
 @synthesize context = _context;
 @synthesize effect = _effect;
-@synthesize viewModelMatrix = _viewModelMatrix;
 @synthesize startUpPopover = _startUpPopover;
 @synthesize beatCounter = _beatCounter;
 @synthesize updateCounter = _updateCounter;
@@ -88,6 +86,8 @@
     self.preferredFramesPerSecond = 30;
     
     [self setupGL];
+    self.view.contentMode = UIViewContentModeRedraw;
+
 }
 
 
@@ -101,12 +101,7 @@
 
     GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, height, 0, 0.0, 1.0); //invert y-axis to match screen coords
     self.effect.transform.projectionMatrix = projectionMatrix;
-    
-    //self.viewModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);//origin at the center of the screen
-    
-    self.viewModelMatrix = GLKMatrix4Identity;
 
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix;
     [self.effect prepareToDraw];
     
 }
@@ -207,6 +202,10 @@
     return vertexBuffer;
 }
 
+/*
+ Renders the model by iterating through and rendering each
+ element of the model
+*/
 - (void) renderModel
 {
     int i;
@@ -250,7 +249,7 @@
     glDisableVertexAttribArray(GLKVertexAttribColor);
     
     //return to normal:
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
     [self.effect prepareToDraw];
 }
 
@@ -321,7 +320,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //return to normal:
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
     [self.effect prepareToDraw];
     
 }
@@ -332,7 +331,7 @@
     GLuint rectVBO = [self getRectVBOofColor: defaultSourceColor];
     
     //tranforms to draw current source:
-    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(self.viewModelMatrix, source.xpos, SOURCE_SIZE/2, 0);
+    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, SOURCE_SIZE/2, 0);
     sourceModelMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE, SOURCE_SIZE, 1);
     self.effect.transform.modelviewMatrix = sourceModelMatrix;
     [self.effect prepareToDraw];
@@ -349,7 +348,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //return to normal:
-    self.effect.transform.modelviewMatrix = self.viewModelMatrix; 
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
     [self.effect prepareToDraw];
     
 }
@@ -381,6 +380,11 @@
     }
 }
 
+/*
+ Prevents tap gesture from interfering with buttons by
+ creating a non-tapable area for buttons (70 pixels from the
+ bottom of the screen)
+*/
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *) touch 
 {
     return ([touch locationInView:self.view].y < self.view.bounds.size.height - 70);
@@ -423,6 +427,9 @@
     }
 }
 
+/*
+ Displays a popover with instructions
+*/
 - (IBAction)helpPressed:(UIButton *)sender 
 {
     if (!self.startUpPopover){
@@ -454,15 +461,6 @@
 {
     return YES;
 }
-
-//- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
-//{
-//    glClearColor(0.65f, 0.68f, 0.77f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
-//    //[self.effect prepareToDraw];
-//    //[self renderModel];        
-//}
 
 
 #pragma mark - GLKView and GLKViewController delegate methods
