@@ -88,6 +88,8 @@
     self.preferredFramesPerSecond = 30;
     
     [self setupGL];
+    self.view.contentMode = UIViewContentModeRedraw;
+
 }
 
 

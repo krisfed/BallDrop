@@ -11,13 +11,13 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
                 <viewController id="2" customClass="BallDropViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5" customClass="GLKView">
+                    <view key="view" contentMode="scaleAspectFit" id="5" customClass="GLKView">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EU1-CO-DN6">
                                 <rect key="frame" x="20" y="942" width="72" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
                                 <state key="normal" title="New">
                                     <color key="titleColor" red="0.58823531866073608" green="0.18823531270027161" blue="0.062745101749897003" alpha="1" colorSpace="deviceRGB"/>
@@ -32,7 +32,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bHf-rI-2bc">
                                 <rect key="frame" x="100" y="942" width="72" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="0.61176472902297974" green="0.16862745583057404" blue="0.058823533356189728" alpha="1" colorSpace="deviceRGB"/>
@@ -47,7 +47,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BeS-Ex-fC5">
                                 <rect key="frame" x="180" y="942" width="72" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
                                 <state key="normal" title="Load">
                                     <color key="titleColor" red="0.61176472902297974" green="0.16862745583057404" blue="0.058823533356189728" alpha="1" colorSpace="deviceRGB"/>
@@ -62,7 +62,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8hf-fp-FxA">
                                 <rect key="frame" x="516" y="942" width="72" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="21"/>
                                 <state key="normal" title="Help">
                                     <color key="titleColor" red="0.61176472900000001" green="0.16862745579999999" blue="0.058823533359999999" alpha="1" colorSpace="deviceRGB"/>
@@ -77,7 +77,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mif-ND-jJr">
                                 <rect key="frame" x="596" y="942" width="72" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="24"/>
                                 <state key="normal" title="+">
                                     <color key="titleColor" red="0.65882354974746704" green="0.054901964962482452" blue="0.047058828175067902" alpha="1" colorSpace="deviceRGB"/>
@@ -92,7 +92,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="a0h-jy-dOQ">
                                 <rect key="frame" x="676" y="942" width="72" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <state key="normal" title="▷">
                                     <color key="titleColor" red="0.65882354974746704" green="0.054901964962482452" blue="0.047058828175067902" alpha="1" colorSpace="deviceRGB"/>
@@ -114,7 +114,7 @@
         </scene>
     </scenes>
     <classes>
-        <class className="BallDropViewController" superclassName="UIViewController">
+        <class className="BallDropViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BallDropViewController.h"/>
         </class>
     </classes>
