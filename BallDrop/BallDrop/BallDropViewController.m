@@ -209,6 +209,10 @@
     return vertexBuffer;
 }
 
+/*
+ Renders the model by iterating through and rendering each
+ element of the model
+*/
 - (void) renderModel
 {
     int i;
@@ -229,6 +233,9 @@
     }
 }
 
+/*
+ Renders a ball as a circle
+*/
 - (void) renderBall: (BallDropBall) ball
 {
     
@@ -256,6 +263,9 @@
     [self.effect prepareToDraw];
 }
 
+/*
+ Renders a block as two circles and a rectangle
+*/
 - (void) renderBlock: (BallDropBlock) block
 {
     
@@ -328,6 +338,11 @@
     
 }
 
+
+/*
+ Renders a ball source as a square with ball source position being in
+ the middle
+*/
 - (void) renderBallSource: (BallDropBallSource) source
 {
     float defaultSourceColor[4] = {0, 0, 0, 1};
@@ -383,6 +398,11 @@
     }
 }
 
+/*
+ Prevents tap gesture from interfering with buttons by
+ creating a non-tapable area for buttons (70 pixels from the
+ bottom of the screen)
+*/
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *) touch 
 {
     return ([touch locationInView:self.view].y < self.view.bounds.size.height - 70);
@@ -423,6 +443,9 @@
     }
 }
 
+/*
+ Displays a popover with instructions
+*/
 - (IBAction)helpPressed:(UIButton *)sender 
 {
     if (!self.startUpPopover){
@@ -454,15 +477,6 @@
 {
     return YES;
 }
-
-//- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
-//{
-//    glClearColor(0.65f, 0.68f, 0.77f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
-//    //[self.effect prepareToDraw];
-//    //[self renderModel];        
-//}
 
 
 #pragma mark - GLKView and GLKViewController delegate methods

@@ -93,13 +93,17 @@
 }
 
 
-// Begin a sequence to draw a new block.
+/*
+ Begins a sequence to draw a new block.
+*/
 - (void) startNewBlockFrom:(CGPoint)startPoint
 {
     [self addBlockFrom:startPoint to:startPoint];
 }
 
-// Continue a sequence to draw a new block.
+/*
+ Continues a sequence to draw a new block.
+*/
 - (void) updateNewBlockTo:(CGPoint)endPoint
 {
     BallDropBlock block;
@@ -109,7 +113,9 @@
     [self addBlockFrom:block.p1 to:endPoint];
 }
 
-// Finish a sequence to draw a new line. This function finalizes the line endpoint
+/*
+ Finishes a sequence to draw a new line. This function finalizes the line endpoint
+*/
 - (void) finalizeNewBlockTo:(CGPoint)endPoint
 {
     BallDropBlock block;
@@ -120,7 +126,9 @@
 }
 
 
-//Adds a ball source
+/*
+ Adds a ball source with a specified x position
+*/
 - (void)addBallSourceAt:(CGFloat) xpos
 {   
     BallDropBallSource newSource;
