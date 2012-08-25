@@ -71,7 +71,7 @@
         _halfPlanes[1] = left;
         _halfPlanes[2] = top;
         
-        NSLog(@"%f", _halfPlanes[0].pointOnPlane[0]);
+        
         // one source by default as example
         [self addBallSourceAt:100];
         

@@ -61,7 +61,7 @@ typedef struct {
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
 - (void) advanceModelState:(float) deltaT;
-- (void) setHalfPlanes: (BDHalfPlane) plane0: (BDHalfPlane) plane1: (BDHalfPlane) plane2: (BDHalfPlane) plane3;
+- (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top;
 
 
 @end
