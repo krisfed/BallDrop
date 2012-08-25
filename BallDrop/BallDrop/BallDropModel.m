@@ -12,7 +12,7 @@
 
 @interface BallDropModel ()
 {
-    BDHalfPlane _halfPlanes[4];
+    BDHalfPlane _halfPlanes[3]; //define the right, left, and top border
 }
 @end
 
@@ -55,18 +55,39 @@
     return _collisions;
 }
 
-- (void) setHalfPlanes: (BDHalfPlane) plane0: (BDHalfPlane) plane1: (BDHalfPlane) plane2: (BDHalfPlane) plane3 {
-    _halfPlanes[0] = plane0;
-    _halfPlanes[1] = plane1;
-    _halfPlanes[2] = plane2;
-    _halfPlanes[3] = plane3;    
+- (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top
+{
+    _halfPlanes[0] = right;
+    _halfPlanes[1] = left;
+    _halfPlanes[2] = top;    
 }
 
-- (id) init
+
+- (id)initWithHalfPlanesRight: (BDHalfPlane)right Left: (BDHalfPlane)left Top: (BDHalfPlane)top
 {
     self = [super init];
     if (self) {
+        _halfPlanes[0] = right;
+        _halfPlanes[1] = left;
+        _halfPlanes[2] = top;
+        
+        NSLog(@"%f", _halfPlanes[0].pointOnPlane[0]);
+        // one source by default as example
         [self addBallSourceAt:100];
+        
+        // four blocks define sink
+        float sinkLength    = 270;
+        float sinkMinHeight = 70;
+        float sinkMaxHeight = 120;
+        [self addBlockFrom:CGPointMake(sinkLength, 0) 
+                        to:CGPointMake(sinkLength, sinkMinHeight)];
+        [self addBlockFrom:CGPointMake(0, sinkMaxHeight) 
+                        to:CGPointMake(sinkLength, sinkMinHeight)];
+        [self addBlockFrom:CGPointMake(_halfPlanes[0].pointOnPlane[0] - sinkLength, 0) 
+                        to:CGPointMake(_halfPlanes[0].pointOnPlane[0] - sinkLength, sinkMinHeight)];
+        [self addBlockFrom:CGPointMake(_halfPlanes[0].pointOnPlane[0], sinkMaxHeight) 
+                        to:CGPointMake(_halfPlanes[0].pointOnPlane[0] - sinkLength, sinkMinHeight)];
+        
         
     }
     
@@ -189,6 +210,8 @@
 
 - (void) advanceModelState:(float) deltaT
 {
+    NSLog(@"%i", self.balls.count);
+    
     //----Wall half planes (x, y, nx, ny)
 	int i, j;
 	float force;
@@ -237,7 +260,7 @@
             [[self.balls objectAtIndex:i] getValue:&ballB];
 			force = bdDetectBallBallCollision(&ballA, &ballB, deltaT, collisionPt);
 			if (force > 0) {
-				NSLog(@"ball collsion");
+                
 			}
             [self.balls replaceObjectAtIndex:i withObject:[NSValue value:&ballB withObjCType:@encode(BDBall)]];
 		}
@@ -249,7 +272,7 @@
 	for (j = 0; j < self.balls.count; j++) {
 		BDBall ball;
         [[self.balls objectAtIndex:j] getValue:&ball];
-		for (i = 0; i < 4; i++) {
+		for (i = 0; i < sizeof(_halfPlanes)/sizeof(BDHalfPlane); i++) {
 			force = bdDetectBallHalfPlaneCollision(&ball, &(_halfPlanes[i]), deltaT, collisionPt);
 			if (force > 0) {
 				// Add requests to play sound and render collision effect to the model
@@ -267,7 +290,7 @@
 			BDBlock block;
             [[self.blocks objectAtIndex:i] getValue:&block];
 			force = bdDetectBallBlockCollision(&ball, &block, deltaT, collisionPt);
-			if (force > 0.2) {
+			if (force > 0) {
                 [BallDropSound makeSoundofType:block.soundType ofNote:block.note];
 			}
 		}
@@ -280,7 +303,14 @@
 		BDBall ball;
         [[self.balls objectAtIndex:i] getValue:&ball];
 		bdAdvanceBallState(&ball, deltaT);
-        [self.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
+        
+        //remove ball if it fell bellow the area of the screen, otherwise advance it
+        if (ball.centerPoint[1] < 0) {
+            [self.balls removeObjectAtIndex:i];
+        } else {
+            [self.balls replaceObjectAtIndex:i withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
+        }
+        
 	}
 }
 

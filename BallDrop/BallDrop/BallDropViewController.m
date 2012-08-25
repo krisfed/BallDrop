@@ -53,12 +53,10 @@
 - (BallDropModel *)model
 {
     if (!_model){
-        _model = [[BallDropModel alloc] init];
         
         BDHalfPlane rightPlane;
         BDHalfPlane leftPlane;
         BDHalfPlane topPlane;
-        BDHalfPlane bottomPlane;
         
         rightPlane.pointOnPlane[0] = self.view.bounds.size.width;
         rightPlane.pointOnPlane[1] = 0;
@@ -66,8 +64,6 @@
         leftPlane.pointOnPlane[1] = 0;
         topPlane.pointOnPlane[0] = 0;
         topPlane.pointOnPlane[1] = self.view.bounds.size.height;
-        bottomPlane.pointOnPlane[0] = 0;
-        bottomPlane.pointOnPlane[1] = 0;
         
         rightPlane.outwardUnitNormal[0] = -1;
         rightPlane.outwardUnitNormal[1] = 0;
@@ -75,10 +71,8 @@
         leftPlane.outwardUnitNormal[1] = 0;
         topPlane.outwardUnitNormal[0] = 0;
         topPlane.outwardUnitNormal[1] = -1;
-        bottomPlane.outwardUnitNormal[0] = 0;
-        bottomPlane.outwardUnitNormal[1] = 1;
         
-        [_model setHalfPlanes:rightPlane :leftPlane :topPlane :bottomPlane];
+        _model = [[BallDropModel alloc] initWithHalfPlanesRight:rightPlane Left:leftPlane Top:topPlane];
     }
     return _model;
 }
@@ -423,7 +417,7 @@
     NSLog(@"new file");
     if (!self.isPlaying)
     {
-        self.model = nil;//[[BallDropModel alloc] init];
+        self.model = nil;
         
     }
 }
@@ -490,7 +484,8 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait) || 
+    (interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
 }
 
 

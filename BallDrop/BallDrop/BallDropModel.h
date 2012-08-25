@@ -54,7 +54,7 @@ typedef struct {
 @property (nonatomic, strong) NSMutableArray *collisions;
 
 
-
+- (id)initWithHalfPlanesRight: (BDHalfPlane)right Left: (BDHalfPlane)left Top: (BDHalfPlane)top;
 - (void) startNewBlockFrom:(CGPoint)startPoint;
 - (void) updateNewBlockTo:(CGPoint)endPoint;
 - (void) finalizeNewBlockTo:(CGPoint)endPoint;
