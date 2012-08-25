@@ -377,6 +377,8 @@
 {
     CGPoint location = [tap locationInView:self.view];
     location.y = self.view.bounds.size.height - location.y;
+    
+    //must not let edit first 4 blocks - they make a sink
 }
 
 /*

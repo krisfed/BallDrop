@@ -182,7 +182,7 @@
 }
 
 /*
- Finishes a sequence to draw a new line. This function finalizes the line endpoint
+ Finishes a sequence to draw a new block. This function finalizes the block endpoint
 */
 - (void) finalizeNewBlockTo:(CGPoint)endPoint
 {    
@@ -210,8 +210,6 @@
 
 - (void) advanceModelState:(float) deltaT
 {
-    NSLog(@"%i", self.balls.count);
-    
     //----Wall half planes (x, y, nx, ny)
 	int i, j;
 	float force;
@@ -291,7 +289,10 @@
             [[self.blocks objectAtIndex:i] getValue:&block];
 			force = bdDetectBallBlockCollision(&ball, &block, deltaT, collisionPt);
 			if (force > 0) {
-                [BallDropSound makeSoundofType:block.soundType ofNote:block.note];
+                //ignore the first four blocks
+                if (i>3) {
+                    [BallDropSound makeSoundofType:block.soundType ofNote:block.note];
+                }
 			}
 		}
         [self.balls replaceObjectAtIndex:j withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
