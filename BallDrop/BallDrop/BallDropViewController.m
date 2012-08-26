@@ -474,7 +474,6 @@
         location.y = self.view.bounds.size.height - location.y;
         float touch[2] = {location.x, location.y};
         id newSelectedBlock = [self blockAtPoint: touch];
-        //BDBlock *castedPointer = (__bridge BDBlock *)self.selectedItem;
         if (newSelectedBlock != self.selectedItem) {
             NSLog(@"different block selected");
             
@@ -491,21 +490,34 @@
 */
 - (void) handlePan:(UIPanGestureRecognizer *) pan
 {
-    CGPoint location = [pan locationInView:self.view];
-    location.y = self.view.bounds.size.height - location.y;
+    //only do anything if playing is stopped
+    if (!self.isPlaying) {
+        
+        CGPoint location = [pan locationInView:self.view];
+        location.y = self.view.bounds.size.height - location.y;
+        
+        if (self.selectedItem) {
+            //move endpoints
+        } else {
+            //create a new block
+            if (pan.state == UIGestureRecognizerStateBegan)
+            {
+                [self.model startNewBlockFrom:location];
+            }
+            else if (pan.state == UIGestureRecognizerStateEnded)
+            {
+                [self.model finalizeNewBlockTo:location];
+            }
+            else if (pan.state == UIGestureRecognizerStateChanged)
+            {
+                [self.model updateNewBlockTo:location];
+            }
+        }
+                    
+    }
+
  
-    if (pan.state == UIGestureRecognizerStateBegan)
-    {
-        [self.model startNewBlockFrom:location];
-    }
-    else if (pan.state == UIGestureRecognizerStateEnded)
-    {
-        [self.model finalizeNewBlockTo:location];
-    }
-    else if (pan.state == UIGestureRecognizerStateChanged)
-    {
-        [self.model updateNewBlockTo:location];
-    }
+
 }
 
 /*Returns a block that is at specified point,
