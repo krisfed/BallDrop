@@ -14,7 +14,7 @@
 #define NUM_BALL_SECTIONS 32
 #define MAX_NUM_BALLS 10
 #define SOURCE_SIZE 25
-#define CONTROL_POINTS_SIZE 10
+#define HANDLES_SIZE 10
 #define SELECTION_RADIUS 5 //how sensitive
 
 @interface BallDropViewController ()
@@ -24,6 +24,7 @@
 @property (strong, nonatomic) GLKBaseEffect *effect;
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (strong, nonatomic) id selectedItem; //pointer to currently selected object
+@property (nonatomic) enum EditBlockState editBlockState; //if a block is currently being edited, and in what way
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) int beatCounter;
 @property (nonatomic) int updateCounter;
@@ -49,6 +50,7 @@
 @synthesize startUpPopover = _startUpPopover;
 @synthesize beatCounter = _beatCounter;
 @synthesize updateCounter = _updateCounter;
+@synthesize editBlockState = _editBlockState;
 
 /* 
  Getter for the model with lazy instantiation
@@ -95,6 +97,9 @@
     
     // initialize vertex models for circle and rectangle
     [self makeVertexModels];
+    
+    //no block is being edited at the start
+    self.editBlockState = EDIT_NO_BLOCK;
     
     //gestures:
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap:)];
@@ -401,7 +406,7 @@
     
     // block start
     blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
-    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, CONTROL_POINTS_SIZE, CONTROL_POINTS_SIZE, 1);
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, HANDLES_SIZE, HANDLES_SIZE, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
     
@@ -421,7 +426,7 @@
     
     //block end
     blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.endPoint[0], block.endPoint[1], 0);
-    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, CONTROL_POINTS_SIZE, CONTROL_POINTS_SIZE, 1);
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, HANDLES_SIZE, HANDLES_SIZE, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
     
@@ -504,11 +509,45 @@
         
         CGPoint location = [pan locationInView:self.view];
         location.y = self.view.bounds.size.height - location.y;
+    
         
+    
+        //if there is an object currently selected
         if (self.selectedItem) {
             //check if first touch is on the same object as selected item
             //if yes - check if it's on endpoints, then adjust the endpoints
             //if no - move the whole block as is
+            
+            float touch[2] = {location.x, location.y};
+            
+//            NSLog(@"selected: %@, touching now: %@", self.selectedItem, [self blockAtPoint:touch]);
+            NSLog(@"%@",[self blockAtPoint:touch]);
+            
+            //if touched the selected object:
+            if ([self blockAtPoint:touch] == self.selectedItem) {
+                NSLog(@"Panning on selected item");
+                BDBlock selectedBlock;
+                [self.selectedItem getValue:&selectedBlock];
+                //if touched the start point handle:
+                if (bdGetDistanceBetweenPoints(touch, selectedBlock.startPoint) <= HANDLES_SIZE) {
+                    NSLog(@"touching start point handle");
+                    selectedBlock.startPoint[0] = touch[0];
+                    selectedBlock.startPoint[1] = touch[1];
+                //if touched the end point handle    
+                } else if (bdGetDistanceBetweenPoints(touch, selectedBlock.endPoint) <= HANDLES_SIZE) {
+                    NSLog(@"touching end point handle");
+                    selectedBlock.endPoint[0] = touch[0];
+                    selectedBlock.endPoint[1] = touch[1];
+                //if touched the body of the block    
+                } else {
+                    NSLog(@"touching body");
+                }
+                
+                [self.model.blocks removeObject:self.selectedItem];
+                [self.model.blocks addObject:[NSValue value:&selectedBlock withObjCType:@encode(BDBlock)]];
+            }
+            
+            
         } else {
             //create a new block
             if (pan.state == UIGestureRecognizerStateBegan)
@@ -531,7 +570,8 @@
 
 }
 
-/*Returns a block that is at specified point,
+/*
+ Returns a block that is at specified point,
  nil if there is nothing
 */
 
@@ -552,6 +592,18 @@
     
 }
     
+
+/*
+ Returns the distance between two given
+ CGPoints
+*/
+- (float)distanceBetweenPoint: (CGPoint)point1 andPoint: (CGPoint)point2
+{
+    float dx = point2.x - point1.x;
+    float dy = point2.y - point1.y;
+    return sqrtf( powf(dx, 2) + powf(dy, 2));
+
+}
    
 
 

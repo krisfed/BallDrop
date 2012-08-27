@@ -26,6 +26,7 @@
 //	Get the distance from the specified point to the specified object. These functions
 //	can be used to find an object within a specified distance from a selection point.
 //-----------------------------------------------------------------------------------
+float bdGetDistanceBetweenPoints(float point1[2], float point2[2]);
 float bdGetDistanceToBall (float point[2], BDBall *ball);
 float bdGetDistanceToBlock (float point[2], BDBlock *block);
 float bdGetDistanceToHalfPlane (float point[2], BDHalfPlane *halfPlane);

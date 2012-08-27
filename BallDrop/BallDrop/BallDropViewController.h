@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
+enum EditBlockState {
+    EDIT_NO_BLOCK, 
+    EDIT_START_HANDLE, 
+    EDIT_END_HANDLE, 
+    EDIT_BLOCK_POSITION
+};
+
 
 @interface BallDropViewController : GLKViewController <UIGestureRecognizerDelegate,UIPopoverControllerDelegate>
 

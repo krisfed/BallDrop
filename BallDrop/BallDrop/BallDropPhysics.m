@@ -35,6 +35,15 @@ deltaT);
 //	SELECTING ELEMENTS IN THE MODEL
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
+//  Get the distance between specified points
+//-----------------------------------------------------------------------------------
+float bdGetDistanceBetweenPoints(float point1[2], float point2[2])
+{
+    float dx = point2[0] - point1[0];
+	float dy = point2[1] - point1[1];
+	return(sqrt(dx * dx + dy * dy));
+}
+//-----------------------------------------------------------------------------------
 //	Get the distance from the specified point to the specified ball. This function
 //	can be used to find an object within a specified distance from a selection point.
 //-----------------------------------------------------------------------------------

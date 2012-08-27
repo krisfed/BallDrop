@@ -149,16 +149,32 @@
     
     newBlock.soundType = 1;
     
-    float dx = endPoint.x - startPoint.x;
-    float dy = endPoint.y - startPoint.y;
-    
-    newBlock.angle = atan2f(dy,dx);
-    newBlock.length = sqrtf(dx*dx + dy*dy);
+//    float dx = endPoint.x - startPoint.x;
+//    float dy = endPoint.y - startPoint.y;
+//    
+//    newBlock.angle = atan2f(dy,dx);
+//    newBlock.length = sqrtf(dx*dx + dy*dy);
     newBlock.width = 2*BLOCK_RADIUS;
+    newBlock = [self recalculateAngleAndLengthForBlock:newBlock];
     
     [self.blocks addObject:[NSValue value:&newBlock withObjCType:@encode(BDBlock)]];
 }
 
+
+/*
+ Calculates and updates block's angle and length based
+ on the block's endpoints information; 
+ takes in the block to be updated, returns the updated block
+*/
+- (BDBlock)recalculateAngleAndLengthForBlock:(BDBlock)block
+{
+    float dx = block.endPoint[0] - block.startPoint[0];
+    float dy = block.endPoint[1] - block.startPoint[1];
+    block.angle = atan2f(dy,dx);
+    block.length = sqrtf(dx*dx + dy*dy);
+    
+    return block;
+}
 
 /*
  Begins a sequence to draw a new block.
@@ -193,6 +209,56 @@
     [self.blocks removeLastObject];
     [self addBlockFrom:p1 to:endPoint];
 
+}
+
+/*
+ Changes the specified block's endpoint to the one provided
+*/
+- (void)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint
+{
+    
+    BDBlock block;
+    [blockObject getValue:&block];
+    block.endPoint[0] = newEndpoint[0];
+    block.endPoint[1] = newEndpoint[1];
+    block = [self recalculateAngleAndLengthForBlock:block];
+    [self.blocks removeObject:blockObject];
+    [self.blocks addObject:[NSValue value:&blockObject withObjCType:@encode(BDBlock)]];
+}
+
+/*
+ Changes the specified block's startpoint to the one provided
+ */
+- (void)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint
+{
+    
+    BDBlock block;
+    [blockObject getValue:&block];
+    block.startPoint[0] = newStartpoint[0];
+    block.startPoint[1] = newStartpoint[1];
+    block = [self recalculateAngleAndLengthForBlock:block];
+    [self.blocks removeObject:blockObject];
+    [self.blocks addObject:[NSValue value:&blockObject withObjCType:@encode(BDBlock)]];
+}
+
+/*
+ Moves the specified block to the new position provided
+*/
+- (void)moveBlock: (id)blockObject toPosition:(float[2])newPosition
+{
+    BDBlock block;
+    [blockObject getValue:&block];
+    float center[2];
+    center[0] = block.startPoint[0] + (block.endPoint[0] - block.startPoint[0])/2.0;
+    center[1] = block.startPoint[1] + (block.endPoint[1] - block.startPoint[1])/2.0;
+    float dx = newPosition[0] - center[0];
+    float dy = newPosition[1] - center[1];
+    block.startPoint[0] += dx;
+    block.endPoint[0]   += dx;
+    block.startPoint[1] += dy;
+    block.endPoint[1]   += dy;
+    [self.blocks removeObject:blockObject];
+    [self.blocks addObject:[NSValue value:&blockObject withObjCType:@encode(BDBlock)]];
 }
 
 
