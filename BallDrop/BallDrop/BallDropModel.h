@@ -58,6 +58,9 @@ typedef struct {
 - (void) startNewBlockFrom:(CGPoint)startPoint;
 - (void) updateNewBlockTo:(CGPoint)endPoint;
 - (void) finalizeNewBlockTo:(CGPoint)endPoint;
+- (id)moveBlock: (id)blockObject toPosition:(float[2])newPosition;
+- (id)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint;
+- (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint;
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
 - (void) advanceModelState:(float) deltaT;

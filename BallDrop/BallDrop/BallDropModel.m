@@ -214,7 +214,7 @@
 /*
  Changes the specified block's endpoint to the one provided
 */
-- (void)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint
+- (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint
 {
     
     BDBlock block;
@@ -223,13 +223,14 @@
     block.endPoint[1] = newEndpoint[1];
     block = [self recalculateAngleAndLengthForBlock:block];
     [self.blocks removeObject:blockObject];
-    [self.blocks addObject:[NSValue value:&blockObject withObjCType:@encode(BDBlock)]];
+    [self.blocks addObject:[NSValue value:&block withObjCType:@encode(BDBlock)]];
+    return [self.blocks lastObject];
 }
 
 /*
  Changes the specified block's startpoint to the one provided
  */
-- (void)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint
+- (id)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint
 {
     
     BDBlock block;
@@ -238,13 +239,14 @@
     block.startPoint[1] = newStartpoint[1];
     block = [self recalculateAngleAndLengthForBlock:block];
     [self.blocks removeObject:blockObject];
-    [self.blocks addObject:[NSValue value:&blockObject withObjCType:@encode(BDBlock)]];
+    [self.blocks addObject:[NSValue value:&block withObjCType:@encode(BDBlock)]];
+    return [self.blocks lastObject];
 }
 
 /*
  Moves the specified block to the new position provided
 */
-- (void)moveBlock: (id)blockObject toPosition:(float[2])newPosition
+- (id)moveBlock: (id)blockObject toPosition:(float[2])newPosition
 {
     BDBlock block;
     [blockObject getValue:&block];
@@ -258,7 +260,8 @@
     block.startPoint[1] += dy;
     block.endPoint[1]   += dy;
     [self.blocks removeObject:blockObject];
-    [self.blocks addObject:[NSValue value:&blockObject withObjCType:@encode(BDBlock)]];
+    [self.blocks addObject:[NSValue value:&block withObjCType:@encode(BDBlock)]];
+    return [self.blocks lastObject];
 }
 
 
