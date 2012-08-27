@@ -500,104 +500,59 @@
 }
 
 /*
- Adds a new block
+ Pan gesture: 
+ if there is an object selected, allows to edit it
+ otherwise, adds a new block
 */
 - (void) handlePan:(UIPanGestureRecognizer *) pan
 {
-    //only do anything if playing is stopped (might be nicer if can adjust while playing too)
-   // if (!self.isPlaying) {
-        
+   
         CGPoint location = [pan locationInView:self.view];
         location.y = self.view.bounds.size.height - location.y;
     
-        
-    
-        //if there is an object currently selected
+        //==== if there is an object currently selected
         if (self.selectedItem) {
-            //check if first touch is on the same object as selected item
-            //if yes - check if it's on endpoints, then adjust the endpoints
-            //if no - move the whole block as is
-            NSLog(@"there is an item selected");
-            
             float touch[2] = {location.x, location.y};
             
-            //if it is a first touch of the pan gesture
-            if (pan.state == UIGestureRecognizerStateBegan) {
-                NSLog(@"this is the first touch of pan");
-                                
-                //if touched the selected object:
+            //==== if it is a first touch of the pan gesture
+            if (pan.state == UIGestureRecognizerStateBegan) {                                
+                //==== if touched the selected object:
                 if ([self blockAtPoint:touch] == self.selectedItem) {
-                    NSLog(@"Panning on selected item");
                     BDBlock selectedBlock;
                     [self.selectedItem getValue:&selectedBlock];
-                    //if touched the start point handle:
+                    //==== if touched the start point handle:
                     if (bdGetDistanceBetweenPoints(touch, selectedBlock.startPoint) <= HANDLES_SIZE) {
-                        NSLog(@"EDIT_START_HANDLE");
                         self.editBlockState = EDIT_START_HANDLE;
-                    //if touched the end point handle:    
+                    //==== if touched the end point handle:    
                     } else if (bdGetDistanceBetweenPoints(touch, selectedBlock.endPoint) <= HANDLES_SIZE) {
-                        NSLog(@"EDIT_END_HANDLE");
                         self.editBlockState = EDIT_END_HANDLE;
-                    //if touched the body of the block    
+                    //==== if touched the body of the block    
                     } else {
-                        NSLog(@"EDIT_BLOCK_POSITION");
                         self.editBlockState = EDIT_BLOCK_POSITION;
                     }
                 }
-            // if it is the continuation of pan gesture    
+            //==== if it is the continuation of pan gesture    
             } else if (pan.state == UIGestureRecognizerStateChanged){
-                NSLog(@"this is the continuation of pan gesture");
                 switch (self.editBlockState) {
                     case EDIT_START_HANDLE:
-                        NSLog(@"EDIT_START_HANDLE in progress");
                         self.selectedItem = [self.model updateBlock:self.selectedItem withStartpoint:touch];
                         break;
                     case EDIT_END_HANDLE:
-                        NSLog(@"EDIT_END_HANDLE in progress");
                         self.selectedItem = [self.model updateBlock:self.selectedItem withEndpoint:touch];
                         break;
                     case EDIT_BLOCK_POSITION:
-                        NSLog(@"EDIT_BLOCK_POSITION in progress");
                         self.selectedItem = [self.model moveBlock:self.selectedItem toPosition:touch];
                         break;
                     default:
                         break;
                 }
-            // if it is the end of pan gesture
-            } else if (pan.state == UIGestureRecognizerStateEnded){
+            //==== if it is the end of pan gesture
+            } else {
                 self.editBlockState = EDIT_NO_BLOCK;
             }
             
-//            float touch[2] = {location.x, location.y};
             
-////            NSLog(@"selected: %@, touching now: %@", self.selectedItem, [self blockAtPoint:touch]);
-//            NSLog(@"%@",[self blockAtPoint:touch]);
-//            
-//            //if touched the selected object:
-//            if ([self blockAtPoint:touch] == self.selectedItem) {
-//                NSLog(@"Panning on selected item");
-//                BDBlock selectedBlock;
-//                [self.selectedItem getValue:&selectedBlock];
-//                //if touched the start point handle:
-//                if (bdGetDistanceBetweenPoints(touch, selectedBlock.startPoint) <= HANDLES_SIZE) {
-//                    NSLog(@"touching start point handle");
-//                    selectedBlock.startPoint[0] = touch[0];
-//                    selectedBlock.startPoint[1] = touch[1];
-//                //if touched the end point handle    
-//                } else if (bdGetDistanceBetweenPoints(touch, selectedBlock.endPoint) <= HANDLES_SIZE) {
-//                    NSLog(@"touching end point handle");
-//                    selectedBlock.endPoint[0] = touch[0];
-//                    selectedBlock.endPoint[1] = touch[1];
-//                //if touched the body of the block    
-//                } else {
-//                    NSLog(@"touching body");
-//                }
-//                
-//                [self.model.blocks removeObject:self.selectedItem];
-//                [self.model.blocks addObject:[NSValue value:&selectedBlock withObjCType:@encode(BDBlock)]];
-//            }
-            
-        //if there is no object selected    
+        //==== if there is no object selected    
         } else {
             //create a new block
             if (pan.state == UIGestureRecognizerStateBegan)
@@ -613,12 +568,10 @@
                 [self.model updateNewBlockTo:location];
             }
         }
-                    
-    //}
-
- 
-
+                
 }
+
+
 
 /*
  Returns a block that is at specified point,

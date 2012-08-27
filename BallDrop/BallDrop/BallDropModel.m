@@ -148,12 +148,6 @@
     }
     
     newBlock.soundType = 1;
-    
-//    float dx = endPoint.x - startPoint.x;
-//    float dy = endPoint.y - startPoint.y;
-//    
-//    newBlock.angle = atan2f(dy,dx);
-//    newBlock.length = sqrtf(dx*dx + dy*dy);
     newBlock.width = 2*BLOCK_RADIUS;
     newBlock = [self recalculateAngleAndLengthForBlock:newBlock];
     
@@ -164,7 +158,7 @@
 /*
  Calculates and updates block's angle and length based
  on the block's endpoints information; 
- takes in the block to be updated, returns the updated block
+ Takes in the block to be updated, returns the updated block
 */
 - (BDBlock)recalculateAngleAndLengthForBlock:(BDBlock)block
 {
@@ -213,6 +207,7 @@
 
 /*
  Changes the specified block's endpoint to the one provided
+ Returns the pointer to the modified block
 */
 - (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint
 {
@@ -229,6 +224,7 @@
 
 /*
  Changes the specified block's startpoint to the one provided
+ Returns the pointer to the modified block
  */
 - (id)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint
 {
@@ -245,6 +241,7 @@
 
 /*
  Moves the specified block to the new position provided
+ Returns the pointer to the modified block
 */
 - (id)moveBlock: (id)blockObject toPosition:(float[2])newPosition
 {

@@ -10,10 +10,10 @@
 #import <GLKit/GLKit.h>
 
 enum EditBlockState {
-    EDIT_NO_BLOCK, 
-    EDIT_START_HANDLE, 
-    EDIT_END_HANDLE, 
-    EDIT_BLOCK_POSITION
+    EDIT_NO_BLOCK,       //no editing of the block is happening 
+    EDIT_START_HANDLE,   //start point of the block is being edited
+    EDIT_END_HANDLE,     //end point of the block is being edited
+    EDIT_BLOCK_POSITION  //block position is being edited
 };
 
 
