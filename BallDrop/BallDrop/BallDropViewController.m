@@ -14,6 +14,7 @@
 #define NUM_BALL_SECTIONS 32
 #define MAX_NUM_BALLS 10
 #define SOURCE_SIZE 25
+#define CONTROL_POINTS_SIZE 10
 #define SELECTION_RADIUS 5 //how sensitive
 
 @interface BallDropViewController ()
@@ -244,7 +245,6 @@
         [blockObject getValue:&block];
         
         if (blockObject == self.selectedItem) {
-            NSLog(@"rendering selected block");
             [self renderSelectedBlock:block];
         } else {
             [self renderBlock:block];
@@ -312,7 +312,7 @@
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //line end
-    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.endPoint[0], block.endPoint[1], 0);
     blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
     self.effect.transform.modelviewMatrix = blockModelMatrix;
     [self.effect prepareToDraw];
@@ -364,49 +364,16 @@
 {
     
     //get color VBOs
-    float red[4] = {1, 0, 0, 1};
+    float red[4] = {0.7, 0, 0, 1};
     GLuint circleVBO = [self getBallVBOofColor:red];
-    GLuint rectVBO = [self getRectVBOofColor: red]; 
-    
-    
-    // block start
-    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
-    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
-    self.effect.transform.modelviewMatrix = blockModelMatrix;
-    [self.effect prepareToDraw];
-    
-    glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                          (const GLvoid *) offsetof(Vertex, Position));
-    glEnableVertexAttribArray(GLKVertexAttribColor);
-    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                          (const GLvoid *) offsetof(Vertex, Color));
-    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    //line end
-    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
-    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, BLOCK_RADIUS, BLOCK_RADIUS, 1);
-    self.effect.transform.modelviewMatrix = blockModelMatrix;
-    [self.effect prepareToDraw];
-    
-    glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                          (const GLvoid *) offsetof(Vertex, Position));
-    glEnableVertexAttribArray(GLKVertexAttribColor);
-    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                          (const GLvoid *) offsetof(Vertex, Color));
-    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GLuint rectVBO = [self getRectVBOofColor: block.Color]; 
     
     
     //block body
     float dx = block.endPoint[0] - block.startPoint[0];
     float dy = block.endPoint[1] - block.startPoint[1];
     //translate to block center
-    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0] + dx/2, block.startPoint[1] + dy/2, 0);
+    GLKMatrix4 blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0] + dx/2, block.startPoint[1] + dy/2, 0);
     //rotate to block's angle
     blockModelMatrix = GLKMatrix4RotateZ(blockModelMatrix, atanf(dy/dx));
     //stretch to block size
@@ -430,6 +397,51 @@
     //return to normal:
     self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
     [self.effect prepareToDraw];
+    
+    
+    // block start
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.startPoint[0], block.startPoint[1], 0);
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, CONTROL_POINTS_SIZE, CONTROL_POINTS_SIZE, 1);
+    self.effect.transform.modelviewMatrix = blockModelMatrix;
+    [self.effect prepareToDraw];
+    
+    glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //return to normal:
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
+    [self.effect prepareToDraw];
+    
+    //block end
+    blockModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, block.endPoint[0], block.endPoint[1], 0);
+    blockModelMatrix = GLKMatrix4Scale(blockModelMatrix, CONTROL_POINTS_SIZE, CONTROL_POINTS_SIZE, 1);
+    self.effect.transform.modelviewMatrix = blockModelMatrix;
+    [self.effect prepareToDraw];
+    
+    glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //return to normal:
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
+    [self.effect prepareToDraw];
+    
+
+    
+
     
 }
 
@@ -462,9 +474,8 @@
 }
 
 
-/* if the game is stopped, checks to see if there is a block or ball source where (or close to where)
- the screen was touched. If there is, then that object is selected and its handles and center become visible
- if there is currently a selected block, and the touch does not select a new block or source, then selected item becomes null
+/* 
+ If the game is stopped, selects/unselects blocks and ball sources
  */
 - (void) handleTap:(UITapGestureRecognizer *) tap
 {    
@@ -475,8 +486,6 @@
         float touch[2] = {location.x, location.y};
         id newSelectedBlock = [self blockAtPoint: touch];
         if (newSelectedBlock != self.selectedItem) {
-            NSLog(@"different block selected");
-            
             self.selectedItem = newSelectedBlock;
         }
         
@@ -490,14 +499,16 @@
 */
 - (void) handlePan:(UIPanGestureRecognizer *) pan
 {
-    //only do anything if playing is stopped
-    if (!self.isPlaying) {
+    //only do anything if playing is stopped (might be nicer if can adjust while playing too)
+   // if (!self.isPlaying) {
         
         CGPoint location = [pan locationInView:self.view];
         location.y = self.view.bounds.size.height - location.y;
         
         if (self.selectedItem) {
-            //move endpoints
+            //check if first touch is on the same object as selected item
+            //if yes - check if it's on endpoints, then adjust the endpoints
+            //if no - move the whole block as is
         } else {
             //create a new block
             if (pan.state == UIGestureRecognizerStateBegan)
@@ -514,7 +525,7 @@
             }
         }
                     
-    }
+    //}
 
  
 
@@ -540,52 +551,6 @@
     return nil;
     
 }
-//-(BDBlock *)blockAtPoint: (float[]) point
-//{
-//    BDBlock *selectedBlock = nil;
-//    
-//    for (int i = 4; i < self.model.blocks.count; i++) {//ignore first 4 blocks
-//        BDBlock block;
-//        [[self.model.blocks objectAtIndex:i] getValue: &block];
-//        float dist = bdGetDistanceToBlock(point, &block);
-//        if (dist<SELECTION_RADIUS) {
-//            selectedBlock = &block;
-//        }
-//        
-//    }
-//    
-//    return selectedBlock;
-//    
-//}
-    
-    //BDBlock selectedBlock;
-//    
-//    for (int i = 4; i < self.model.blocks.count; i++) {//ignore first 4 blocks
-//        BDBlock block;
-//        [[self.model.blocks objectAtIndex:i] getValue: &block];
-//        float dist = bdGetDistanceToBlock(point, &block);
-//        if (dist<SELECTION_RADIUS) {
-//            return block;
-//        }
-//        
-//    }
-//    
-//    return 0;
-    
-    /*
-     BDBlock *bdSelectBlock (BDModel *model, float *selPoint, float selRadius)
-     {
-     int i;
-     float minDist = selRadius;
-     BDBlock *selectedBlock = NULL;
-     for (i = 0; i < model->numBlocks; i++) {
-     BDBlock *block = &(model->blocks[i]);
-     float dist = bdGetDistanceToBlock(selPoint, block);
-     if (dist < minDist) selectedBlock = block;
-     }
-     return(selectedBlock);
-     }
-    */
     
    
 
@@ -684,6 +649,8 @@
 {
     if (self.isPlaying)
     {
+        self.selectedItem = nil;
+        
         int i;
         if (self.updateCounter >= 15){
             self.updateCounter = 0;
