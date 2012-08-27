@@ -15,7 +15,7 @@
 #define MAX_NUM_BALLS 10
 #define SOURCE_SIZE 25
 #define HANDLES_SIZE 20
-#define SELECTION_RADIUS 10 //how sensitive
+#define SELECTION_RADIUS 10 //how sensitive selection is to touch
 
 @interface BallDropViewController ()
 
@@ -259,8 +259,15 @@
     //----ball sources:
     for (i = 0; i < self.model.ballSources.count; i++){
         BDBallSource source;
-        [[self.model.ballSources objectAtIndex:i] getValue:&source];
-        [self renderBallSource:source];
+        id sourceObject = [self.model.ballSources objectAtIndex:i];
+        [sourceObject getValue:&source];
+        
+        if (sourceObject == self.selectedItem) {
+            [self renderSelectedBallSource: source];
+        } else {
+            [self renderBallSource: source];
+        }
+        
     }
 }
 
@@ -369,7 +376,7 @@
 {
     
     //get color VBOs
-    float red[4] = {0.7, 0, 0, 1};
+    float red[4] = {0.75, 0, 0, 1};
     GLuint circleVBO = [self getBallVBOofColor:red];
     GLuint rectVBO = [self getRectVBOofColor: block.Color]; 
     
@@ -475,6 +482,59 @@
     
 }
 
+- (void) renderSelectedBallSource: (BDBallSource) source
+{
+    //translate to the position of current source
+    GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, self.view.bounds.size.height - SOURCE_SIZE/2, 0);
+    
+    // ==== draw outline:
+    float outlineColor[4] = {0.75, 0, 0, 1};
+    GLuint rectVBO = [self getRectVBOofColor: outlineColor];
+    
+    //scale to outline size:
+    self.effect.transform.modelviewMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE+15, SOURCE_SIZE+15, 1);
+    [self.effect prepareToDraw];
+    
+    //draw outline
+    glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    // ==== draw source:
+    float defaultSourceColor[4] = {0, 0, 0, 1};
+    rectVBO = [self getRectVBOofColor: defaultSourceColor];
+    
+    //scale to source size:
+    self.effect.transform.modelviewMatrix = GLKMatrix4Scale(sourceModelMatrix, SOURCE_SIZE, SOURCE_SIZE, 1);
+    [self.effect prepareToDraw];
+    
+    //draw
+    glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, Position));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                          (const GLvoid *) offsetof(Vertex, Color));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    
+    
+
+    
+    //return to normal:
+    self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
+    [self.effect prepareToDraw];
+    
+}
+
 
 /* 
  If the game is stopped, selects/unselects blocks and ball sources
@@ -482,19 +542,19 @@
 - (void) handleTap:(UITapGestureRecognizer *) tap
 {    
     if (!self.isPlaying) {
-        
         CGPoint location = [tap locationInView:self.view];
         location.y = self.view.bounds.size.height - location.y;
         float touch[2] = {location.x, location.y};
-        id newSelectedBlock = [self blockAtPoint: touch];
-        if (newSelectedBlock != self.selectedItem) {
-            self.selectedItem = newSelectedBlock;
+        
+        //preference in selection is given to blocks:
+        self.selectedItem = [self blockAtPoint: touch];
+        //if there is no block, check for sources:
+        if (!self.selectedItem) {
+            self.selectedItem = [self ballSourceAtPoint:touch];
         }
-        
-        
     }
-    
 }
+
 
 /*
  Pan gesture: 
@@ -592,6 +652,31 @@
     
 }
     
+/*
+ Returns a ball source that is a at a specified point
+ (if several, the closest one),
+ nil if there is nothing
+*/
+- (id)ballSourceAtPoint: (float[]) point
+{
+    id selectedSource = nil;
+    
+    //selectable area is a circle large enough to contain the 
+    //square of ball source:
+    float minDist = SOURCE_SIZE * sqrt(2) + SELECTION_RADIUS;
+    float ypos = self.view.bounds.size.height - SOURCE_SIZE/2;
+    for (int i = 0; i< self.model.ballSources.count; i++) {
+        BDBallSource source;
+        [[self.model.ballSources objectAtIndex:i] getValue:&source];
+        float position[2] = {source.xpos, ypos};
+        if (bdGetDistanceBetweenPoints(position, point) < minDist) {
+            selectedSource = [self.model.ballSources objectAtIndex:i];
+        }
+    }
+    
+    
+    return selectedSource;
+}
    
 
 
