@@ -443,12 +443,9 @@
     //return to normal:
     self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
     [self.effect prepareToDraw];
-    
-
-    
-
-    
+        
 }
+
 
 - (void) renderBallSource: (BDBallSource) source
 {
@@ -574,7 +571,7 @@
 
 
 /*
- Returns a block that is at specified point,
+ Returns a block that is at a specified point,
  nil if there is nothing
 */
 
@@ -595,18 +592,6 @@
     
 }
     
-
-/*
- Returns the distance between two given
- CGPoints
-*/
-- (float)distanceBetweenPoint: (CGPoint)point1 andPoint: (CGPoint)point2
-{
-    float dx = point2.x - point1.x;
-    float dy = point2.y - point1.y;
-    return sqrtf( powf(dx, 2) + powf(dy, 2));
-
-}
    
 
 
@@ -646,6 +631,8 @@
 - (IBAction)newBallSourcePressed:(UIButton *)sender 
 {
     NSLog(@"new ball source");
+    int randomX = arc4random() % (int)self.view.bounds.size.width;
+    [self.model addBallSourceAt:randomX];
 }
 
 - (IBAction)playStopPressed:(UIButton *)sender {
