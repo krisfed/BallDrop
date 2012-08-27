@@ -63,6 +63,7 @@ typedef struct {
 - (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint;
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
+- (id)moveBallSource: (id)sourceObject toPosition:(float)newX;
 - (void) advanceModelState:(float) deltaT;
 - (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top;
 

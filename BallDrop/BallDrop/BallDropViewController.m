@@ -24,7 +24,7 @@
 @property (strong, nonatomic) GLKBaseEffect *effect;
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (strong, nonatomic) id selectedItem; //pointer to currently selected object
-@property (nonatomic) enum EditBlockState editBlockState; //if a block is currently being edited, and in what way
+@property (nonatomic) enum EditObjectState editObjectState; //if a block is currently being edited, and in what way
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) int beatCounter;
 @property (nonatomic) int updateCounter;
@@ -50,7 +50,7 @@
 @synthesize startUpPopover = _startUpPopover;
 @synthesize beatCounter = _beatCounter;
 @synthesize updateCounter = _updateCounter;
-@synthesize editBlockState = _editBlockState;
+@synthesize editObjectState = _editBlockState;
 
 /* 
  Getter for the model with lazy instantiation
@@ -99,7 +99,7 @@
     [self makeVertexModels];
     
     //no block is being edited at the start
-    self.editBlockState = EDIT_NO_BLOCK;
+    self.editObjectState = EDIT_NO_OBJECT;
     
     //gestures:
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap:)];
@@ -573,24 +573,29 @@
             
             //==== if it is a first touch of the pan gesture
             if (pan.state == UIGestureRecognizerStateBegan) {                                
-                //==== if touched the selected object:
+                //==== if touched the selected block:
                 if ([self blockAtPoint:touch] == self.selectedItem) {
                     BDBlock selectedBlock;
                     [self.selectedItem getValue:&selectedBlock];
                     //==== if touched the start point handle:
                     if (bdGetDistanceBetweenPoints(touch, selectedBlock.startPoint) <= HANDLES_SIZE) {
-                        self.editBlockState = EDIT_START_HANDLE;
+                        self.editObjectState = EDIT_START_HANDLE;
                     //==== if touched the end point handle:    
                     } else if (bdGetDistanceBetweenPoints(touch, selectedBlock.endPoint) <= HANDLES_SIZE) {
-                        self.editBlockState = EDIT_END_HANDLE;
+                        self.editObjectState = EDIT_END_HANDLE;
                     //==== if touched the body of the block    
                     } else {
-                        self.editBlockState = EDIT_BLOCK_POSITION;
+                        self.editObjectState = EDIT_BLOCK_POSITION;
                     }
+                //==== if touched the selected ball source:
+                } else if ([self ballSourceAtPoint: touch] == self.selectedItem) {
+                    self.editObjectState = EDIT_SOURCE_POSITION;
                 }
+                
+                
             //==== if it is the continuation of pan gesture    
             } else if (pan.state == UIGestureRecognizerStateChanged){
-                switch (self.editBlockState) {
+                switch (self.editObjectState) {
                     case EDIT_START_HANDLE:
                         self.selectedItem = [self.model updateBlock:self.selectedItem withStartpoint:touch];
                         break;
@@ -600,12 +605,14 @@
                     case EDIT_BLOCK_POSITION:
                         self.selectedItem = [self.model moveBlock:self.selectedItem toPosition:touch];
                         break;
+                    case EDIT_SOURCE_POSITION:
+                        self.selectedItem = [self.model moveBallSource:self.selectedItem toPosition:touch[0]];
                     default:
                         break;
                 }
             //==== if it is the end of pan gesture
             } else {
-                self.editBlockState = EDIT_NO_BLOCK;
+                self.editObjectState = EDIT_NO_OBJECT;
             }
             
             
@@ -698,7 +705,7 @@
     {
         self.model = nil;
         self.selectedItem = nil;
-        self.editBlockState = EDIT_NO_BLOCK;
+        self.editObjectState = EDIT_NO_OBJECT;
         
     }
 }

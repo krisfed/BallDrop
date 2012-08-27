@@ -274,6 +274,21 @@
     [self.ballSources addObject:[NSValue value:&newSource withObjCType:@encode(BDBallSource)]];
 }
 
+/*
+ Moves the specified ball source to a provided new x position;
+ Returns the pointer to the specified ball source
+*/
+- (id)moveBallSource: (id)sourceObject toPosition:(float)newX
+{
+    BDBallSource source;
+    [sourceObject getValue:&source];
+    source.xpos = newX;
+    [self.ballSources removeObject:sourceObject];
+    [self.ballSources addObject:[NSValue value:&source withObjCType:@encode(BDBallSource)]];
+    return [self.ballSources lastObject];
+    
+}
+
 - (void) advanceModelState:(float) deltaT
 {
     //----Wall half planes (x, y, nx, ny)

@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
-enum EditBlockState {
-    EDIT_NO_BLOCK,       //no editing of the block is happening 
-    EDIT_START_HANDLE,   //start point of the block is being edited
-    EDIT_END_HANDLE,     //end point of the block is being edited
-    EDIT_BLOCK_POSITION  //block position is being edited
+enum EditObjectState {
+    EDIT_NO_OBJECT,       //no editing of the block or ball source is happening 
+    EDIT_START_HANDLE,    //start point of the block is being edited
+    EDIT_END_HANDLE,      //end point of the block is being edited
+    EDIT_BLOCK_POSITION,  //block position is being edited
+    EDIT_SOURCE_POSITION  //ball source position is being edited
 };
 
 
