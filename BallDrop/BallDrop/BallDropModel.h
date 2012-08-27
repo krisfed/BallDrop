@@ -14,7 +14,7 @@
 @interface BallDropModel : NSObject
 
 typedef struct {
-    float Position[2]; //if doesn't work, change to 3
+    float Position[2]; 
     float Color[4];
 } Vertex;
 
