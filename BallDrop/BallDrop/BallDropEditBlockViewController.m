@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.contentSizeForViewInPopover = CGSizeMake(300.0, 300.0);
     }
     return self;
 }

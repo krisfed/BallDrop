@@ -8,6 +8,7 @@
 
 #import "BallDropViewController.h"
 #import "BallDropStartUpViewController.h"
+#import "BallDropEditBlockViewController.h"
 #import "BallDropModel.h"
 #import "BallDropPhysics.h"
 
@@ -23,6 +24,7 @@
 @property (strong, nonatomic) BallDropModel *model;
 @property (strong, nonatomic) GLKBaseEffect *effect;
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
+@property (strong, nonatomic) UIPopoverController *blockEditPopover;
 @property (strong, nonatomic) id selectedItem; //pointer to currently selected object
 @property (nonatomic) enum EditObjectState editObjectState; //if a block is currently being edited, and in what way
 @property (nonatomic) BOOL isPlaying;
@@ -48,6 +50,7 @@
 @synthesize context = _context;
 @synthesize effect = _effect;
 @synthesize startUpPopover = _startUpPopover;
+@synthesize blockEditPopover = _blockEditPopover;
 @synthesize beatCounter = _beatCounter;
 @synthesize updateCounter = _updateCounter;
 @synthesize editObjectState = _editBlockState;
@@ -80,6 +83,21 @@
         _model = [[BallDropModel alloc] initWithHalfPlanesRight:rightPlane Left:leftPlane Top:topPlane];
     }
     return _model;
+}
+
+/*
+ Getter for the block edit popover with lazy instantiation
+*/
+- (UIPopoverController *)blockEditPopover
+{
+    if (!_blockEditPopover) {
+        BallDropEditBlockViewController *content = [[BallDropEditBlockViewController alloc] init];
+        self.blockEditPopover = [[UIPopoverController alloc] initWithContentViewController:content];
+        self.blockEditPopover.delegate = self;
+        
+    }
+    
+    return _blockEditPopover;
 }
 
 - (void)viewDidLoad
@@ -543,14 +561,16 @@
 {    
     if (!self.isPlaying) {
         CGPoint location = [tap locationInView:self.view];
-        location.y = self.view.bounds.size.height - location.y;
-        float touch[2] = {location.x, location.y};
+        //location.y = self.view.bounds.size.height - location.y;
+        float touch[2] = {location.x, self.view.bounds.size.height - location.y};
         
         //preference in selection is given to blocks:
         self.selectedItem = [self blockAtPoint: touch];
         //if there is no block, check for sources:
         if (!self.selectedItem) {
             self.selectedItem = [self ballSourceAtPoint:touch];
+        } else {
+            [self.blockEditPopover presentPopoverFromRect:CGRectMake(location.x, location.y, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         }
     }
 }
@@ -750,7 +770,7 @@
     if (!self.startUpPopover){
         BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
         UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
-        popover.delegate = self;
+        //popover.delegate = self;
     
         self.startUpPopover = popover;
     }
