@@ -49,6 +49,8 @@
 		EDD581F615E6677A00D211A2 /* BallDropSound.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD581F515E6677A00D211A2 /* BallDropSound.m */; };
 		F702EB3515EC35980059598C /* BallDropEditBlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F702EB3315EC35980059598C /* BallDropEditBlockViewController.m */; };
 		F702EB3615EC35980059598C /* BallDropEditBlockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F702EB3415EC35980059598C /* BallDropEditBlockViewController.xib */; };
+		F702EB3B15EECCC40059598C /* BallDropEditBallSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F702EB3915EECCC30059598C /* BallDropEditBallSourceViewController.m */; };
+		F702EB3C15EECCC40059598C /* BallDropEditBallSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F702EB3A15EECCC40059598C /* BallDropEditBallSourceViewController.xib */; };
 		F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE515DA4A32009EFF09 /* UIKit.framework */; };
 		F79DCDE815DA4A32009EFF09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE715DA4A32009EFF09 /* Foundation.framework */; };
 		F79DCDEA15DA4A32009EFF09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE915DA4A32009EFF09 /* CoreGraphics.framework */; };
@@ -109,6 +111,9 @@
 		F702EB3215EC35980059598C /* BallDropEditBlockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropEditBlockViewController.h; sourceTree = "<group>"; };
 		F702EB3315EC35980059598C /* BallDropEditBlockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropEditBlockViewController.m; sourceTree = "<group>"; };
 		F702EB3415EC35980059598C /* BallDropEditBlockViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BallDropEditBlockViewController.xib; sourceTree = "<group>"; };
+		F702EB3815EECCC00059598C /* BallDropEditBallSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropEditBallSourceViewController.h; sourceTree = "<group>"; };
+		F702EB3915EECCC30059598C /* BallDropEditBallSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropEditBallSourceViewController.m; sourceTree = "<group>"; };
+		F702EB3A15EECCC40059598C /* BallDropEditBallSourceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BallDropEditBallSourceViewController.xib; sourceTree = "<group>"; };
 		F79DCDE115DA4A32009EFF09 /* BallDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BallDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79DCDE515DA4A32009EFF09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F79DCDE715DA4A32009EFF09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -253,6 +258,9 @@
 				F702EB3215EC35980059598C /* BallDropEditBlockViewController.h */,
 				F702EB3315EC35980059598C /* BallDropEditBlockViewController.m */,
 				F702EB3415EC35980059598C /* BallDropEditBlockViewController.xib */,
+				F702EB3815EECCC00059598C /* BallDropEditBallSourceViewController.h */,
+				F702EB3915EECCC30059598C /* BallDropEditBallSourceViewController.m */,
+				F702EB3A15EECCC40059598C /* BallDropEditBallSourceViewController.xib */,
 				EDD581F115E6668D00D211A2 /* BallDropModel.m */,
 				F79DCDF415DA4A32009EFF09 /* BallDropAppDelegate.h */,
 				F79DCDF515DA4A32009EFF09 /* BallDropAppDelegate.m */,
@@ -364,6 +372,7 @@
 				ED151F6815E68EC500F3966E /* Drum6.m4a in Resources */,
 				ED151F6915E68EC500F3966E /* Drum7.m4a in Resources */,
 				F702EB3615EC35980059598C /* BallDropEditBlockViewController.xib in Resources */,
+				F702EB3C15EECCC40059598C /* BallDropEditBallSourceViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +391,7 @@
 				ED151EDC15E6814700F3966E /* BallDropStartUpViewController.m in Sources */,
 				ED86FC7C15E7CD41005BC7F6 /* BallDropPhysics.m in Sources */,
 				F702EB3515EC35980059598C /* BallDropEditBlockViewController.m in Sources */,
+				F702EB3B15EECCC40059598C /* BallDropEditBallSourceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

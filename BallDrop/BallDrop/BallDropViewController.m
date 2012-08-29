@@ -9,6 +9,7 @@
 #import "BallDropViewController.h"
 #import "BallDropStartUpViewController.h"
 #import "BallDropEditBlockViewController.h"
+#import "BallDropEditBallSourceViewController.h"
 #import "BallDropModel.h"
 #import "BallDropPhysics.h"
 
@@ -25,6 +26,7 @@
 @property (strong, nonatomic) GLKBaseEffect *effect;
 @property (strong, nonatomic) UIPopoverController *startUpPopover;
 @property (strong, nonatomic) UIPopoverController *blockEditPopover;
+@property (strong, nonatomic) UIPopoverController *sourceEditPopover;
 @property (strong, nonatomic) id selectedItem; //pointer to currently selected object
 @property (nonatomic) enum EditObjectState editObjectState; //if a block is currently being edited, and in what way
 @property (nonatomic) BOOL isPlaying;
@@ -51,6 +53,7 @@
 @synthesize effect = _effect;
 @synthesize startUpPopover = _startUpPopover;
 @synthesize blockEditPopover = _blockEditPopover;
+@synthesize sourceEditPopover = _sourceEditPopover;
 @synthesize beatCounter = _beatCounter;
 @synthesize updateCounter = _updateCounter;
 @synthesize editObjectState = _editBlockState;
@@ -98,6 +101,21 @@
     }
     
     return _blockEditPopover;
+}
+
+/*
+ Getter for the ball source edit popover with lazy instantiation
+ */
+- (UIPopoverController *)sourceEditPopover
+{
+    if (!_sourceEditPopover) {
+        BallDropEditBallSourceViewController *content = [[BallDropEditBallSourceViewController alloc] init];
+        self.sourceEditPopover = [[UIPopoverController alloc] initWithContentViewController:content];
+        self.sourceEditPopover.delegate = self;
+        
+    }
+    
+    return _sourceEditPopover;
 }
 
 - (void)viewDidLoad
@@ -566,12 +584,20 @@
         
         //preference in selection is given to blocks:
         self.selectedItem = [self blockAtPoint: touch];
-        //if there is no block, check for sources:
-        if (!self.selectedItem) {
-            self.selectedItem = [self ballSourceAtPoint:touch];
-        } else {
+        //if there is block selected, show block edit popover:
+        if (self.selectedItem) {
             [self.blockEditPopover presentPopoverFromRect:CGRectMake(location.x, location.y, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        //if no block selected, check for sources    
+        } else {
+            self.selectedItem = [self ballSourceAtPoint:touch];
+            
+            //if source is selected, show source edit popover
+            if (self.selectedItem) {
+                [self.sourceEditPopover presentPopoverFromRect:CGRectMake(location.x, location.y, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            }
         }
+        
+
     }
 }
 
@@ -716,6 +742,45 @@
 {
     return ([touch locationInView:self.view].y < self.view.bounds.size.height - 70);
 }
+
+
+// =========== Popover delegate methods ==========================
+/*
+ Parameters:
+ popoverController
+ The popover controller to be dismissed.
+ 
+ Return Value:
+ YES if the popover should be dismissed or NO if it should remain visible.
+ 
+ This method is called in response to user-initiated attempts to dismiss the popover. It is not called when you dismiss the popover using the dismissPopoverAnimated: method of the popover controller.
+ 
+ If you do not implement this method in your delegate, the default return value is assumed to be YES. 
+ */
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+{
+    return YES;
+}
+
+
+/*
+ Parameters:
+ popoverController
+ The popover controller that was dismissed.
+ 
+ The popover controller does not call this method in response to programmatic calls to the dismissPopoverAnimated: method. If you dismiss the popover programmatically, you should perform any cleanup actions immediately after calling the dismissPopoverAnimated: method.
+ 
+ You can use this method to incorporate any changes from the popover’s content view controller back into your application. If you do not plan to use the object in the popoverController parameter again, it is safe to release it from this method. 
+ */
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    NSLog(@"Popover was dismissed!");
+    
+    self.blockEditPopover = nil;
+    self.sourceEditPopover = nil;
+}
+// =========== Popover delegate methods ==========================
 
 
 - (IBAction)newFilePressed:(UIButton *)sender 
