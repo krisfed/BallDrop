@@ -41,4 +41,6 @@
 	return YES;
 }
 
+- (IBAction)deletePressed:(UIButton *)sender {
+}
 @end

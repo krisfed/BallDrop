@@ -10,4 +10,7 @@
 
 @interface BallDropEditBlockViewController : UIViewController
 
+- (IBAction)deletePressed:(UIButton *)sender;
+
 @end
+
