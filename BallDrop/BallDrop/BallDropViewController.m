@@ -837,7 +837,7 @@
 - (IBAction)newBallSourcePressed:(UIButton *)sender 
 {
     NSLog(@"new ball source");
-    int randomX = arc4random() % (int)self.view.bounds.size.width;
+    int randomX = (arc4random() % (int)(self.view.bounds.size.width - SOURCE_SIZE/2)) + SOURCE_SIZE/2;
     [self.model addBallSourceAt:randomX];
 }
 
