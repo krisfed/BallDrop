@@ -95,6 +95,7 @@
 {
     if (!_blockEditPopover) {
         BallDropEditBlockViewController *content = [[BallDropEditBlockViewController alloc] init];
+        content.deleteObjectDelegate = self;
         self.blockEditPopover = [[UIPopoverController alloc] initWithContentViewController:content];
         self.blockEditPopover.delegate = self;
         
@@ -110,6 +111,7 @@
 {
     if (!_sourceEditPopover) {
         BallDropEditBallSourceViewController *content = [[BallDropEditBallSourceViewController alloc] init];
+        content.deleteObjectDelegate = self;
         self.sourceEditPopover = [[UIPopoverController alloc] initWithContentViewController:content];
         self.sourceEditPopover.delegate = self;
         
@@ -781,6 +783,33 @@
     self.sourceEditPopover = nil;
 }
 // =========== Popover delegate methods ==========================
+
+
+/* BallDropDeleteObjectDelegate method
+ Based on the popover view controller sending the message
+ delete the selected object from the model
+ dismiss popover
+*/
+-(void)deleteObject:(id)sender
+{
+    if ([sender isKindOfClass:[BallDropEditBlockViewController class]]){
+        
+        [self.model removeBlock: self.selectedItem];
+        self.selectedItem = nil;
+        [self.blockEditPopover dismissPopoverAnimated:YES];
+        self.blockEditPopover = nil;
+        NSLog(@"self.blockEditPopover: %@", _blockEditPopover);
+        
+    } else if ([sender isKindOfClass:[BallDropEditBallSourceViewController class]]){
+        
+        [self.model removeBallSource: self.selectedItem];
+        self.selectedItem = nil;
+        [self.sourceEditPopover dismissPopoverAnimated:YES];
+        self.sourceEditPopover = nil;
+        NSLog(@"self.sourceEditPopover: %@", _sourceEditPopover);
+        
+    }
+}
 
 
 - (IBAction)newFilePressed:(UIButton *)sender 

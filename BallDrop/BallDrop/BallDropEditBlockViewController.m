@@ -14,6 +14,8 @@
 
 @implementation BallDropEditBlockViewController
 
+@synthesize deleteObjectDelegate = _deleteObjectDelegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,6 +43,10 @@
 	return YES;
 }
 
-- (IBAction)deletePressed:(UIButton *)sender {
+- (IBAction)deletePressed:(UIButton *)sender 
+{
+    
+    NSLog(@"delete was pressed from edit block popover");
+    [self.deleteObjectDelegate deleteObject:self];
 }
 @end

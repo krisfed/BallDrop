@@ -66,6 +66,8 @@ typedef struct {
 - (id)moveBallSource: (id)sourceObject toPosition:(float)newX;
 - (void) advanceModelState:(float) deltaT;
 - (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top;
+- (void) removeBlock: (id) block;
+- (void) removeBallSource: (id) ballSource;
 
 
 @end

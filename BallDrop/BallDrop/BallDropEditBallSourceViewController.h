@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BallDropDeleteObjectDelegate.h"
 
 @interface BallDropEditBallSourceViewController : UIViewController
+
+@property (nonatomic) id <BallDropDeleteObjectDelegate> deleteObjectDelegate;
 
 - (IBAction)deletePressed:(UIButton *)sender;
 

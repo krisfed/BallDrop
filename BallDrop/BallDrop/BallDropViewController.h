@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import "BallDropDeleteObjectDelegate.h"
 
 enum EditObjectState {
     EDIT_NO_OBJECT,       //no editing of the block or ball source is happening 
@@ -18,6 +19,6 @@ enum EditObjectState {
 };
 
 
-@interface BallDropViewController : GLKViewController <UIGestureRecognizerDelegate,UIPopoverControllerDelegate>
+@interface BallDropViewController : GLKViewController <UIGestureRecognizerDelegate,UIPopoverControllerDelegate, BallDropDeleteObjectDelegate>
 
 @end

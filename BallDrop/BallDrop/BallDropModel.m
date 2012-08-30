@@ -289,6 +289,23 @@
     
 }
 
+/*
+ Removes the specified block from the model
+*/
+- (void) removeBlock: (id) block
+{
+    [self.blocks removeObject:block];
+    
+}
+
+/*
+ Removes the specified ball source from the model
+ */
+- (void) removeBallSource: (id) ballSource
+{
+    [self.ballSources removeObject:ballSource];
+}
+
 - (void) advanceModelState:(float) deltaT
 {
     //----Wall half planes (x, y, nx, ny)

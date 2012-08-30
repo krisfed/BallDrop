@@ -8,11 +8,15 @@
 
 #import "BallDropEditBallSourceViewController.h"
 
+
 @interface BallDropEditBallSourceViewController ()
+
 
 @end
 
 @implementation BallDropEditBallSourceViewController
+
+@synthesize deleteObjectDelegate = _deleteObjectDelegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,6 +45,13 @@
 	return YES;
 }
 
-- (IBAction)deletePressed:(UIButton *)sender {
+/*
+ When the button is pressed, sends a message to the delegate to delete the selected object
+*/
+- (IBAction)deletePressed:(UIButton *)sender 
+{
+    NSLog(@"delete was pressed from edit ball source popover");
+    [self.deleteObjectDelegate deleteObject:self];
+    
 }
 @end
