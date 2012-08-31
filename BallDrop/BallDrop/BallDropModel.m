@@ -254,6 +254,23 @@
 
 //-----------------------------------------------------------------------
 /*
+ Changes the specified block's soundType to the one provided
+ by replacing the old block in the model with the updated one
+ Returns the pointer to the modified block
+ */
+- (id)updateBlock:(id)blockObject withSoundType:(int)soundType
+{
+    BDBlock block;
+    [blockObject getValue:&block];
+    block.soundType = soundType;
+    [self.blocks removeObject:blockObject];
+    [self.blocks addObject:[NSValue value:&block withObjCType:@encode(BDBlock)]];
+    return [self.blocks lastObject];
+}
+
+
+//-----------------------------------------------------------------------
+/*
  Moves the specified block to the new position provided
  (by replacing the old block in the model with the updated one)
  Returns the pointer to the modified block

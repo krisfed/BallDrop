@@ -12,7 +12,10 @@
 
 @interface BallDropEditBlockViewController : UIViewController
 
-@property (nonatomic) id <BallDropDeleteObjectDelegate> deleteObjectDelegate;
+@property (nonatomic) id <BallDropDeleteObjectDelegate> deleteObjectDelegate; //takes care of deleting process
+
+// UI Elements:
+@property (strong, nonatomic) IBOutlet UISegmentedControl *soundTypeSegmentedController;
 
 - (IBAction)deletePressed:(UIButton *)sender;
 

@@ -31,7 +31,7 @@ typedef struct {
 	float width;		 // Block width
 	float length;		 // Distance between end points; Required by physics simulator
 	float angle;		 // Angle from horizontal; Required by physics simulator
-    int soundType;
+    int soundType;      // 0 = Drum, 1 = Bass, 2 = Bell
     int note;
     float Color[4];
 } BDBlock;
@@ -61,6 +61,7 @@ typedef struct {
 - (id)moveBlock: (id)blockObject toPosition:(float[2])newPosition;
 - (id)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint;
 - (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint;
+- (id)updateBlock:(id)blockObject withSoundType:(int)soundType;
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
 - (id)moveBallSource: (id)sourceObject toPosition:(float)newX;

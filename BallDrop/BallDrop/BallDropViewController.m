@@ -604,7 +604,18 @@
         self.selectedItem = [self blockAtPoint: touch];
         //if there is block selected, show block edit popover:
         if (self.selectedItem) {
+            //present popover:
             [self.blockEditPopover presentPopoverFromRect:CGRectMake(location.x, location.y, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            
+            //update the controls of the popover to match
+            //the properties of the selected block
+            BDBlock block;
+            [self.selectedItem getValue:&block];
+            BallDropEditBlockViewController *popoverViewController = (BallDropEditBlockViewController *) self.blockEditPopover.contentViewController;
+            popoverViewController.soundTypeSegmentedController.selectedSegmentIndex = block.soundType;
+            
+            
+            
         //if no block selected, check for sources    
         } else {
             self.selectedItem = [self ballSourceAtPoint:touch];
@@ -798,10 +809,20 @@
  */
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
-    NSLog(@"Popover was dismissed!");
-    
-    self.blockEditPopover = nil;
-    self.sourceEditPopover = nil;
+    //if it was a block-editing popover dismissed:
+    if ([popoverController.contentViewController isKindOfClass:
+        [BallDropEditBlockViewController class]]) {
+        
+        //update the properties of selected block as specifed in popover
+        BallDropEditBlockViewController *popoverViewController = (BallDropEditBlockViewController *) popoverController.contentViewController;
+        self.selectedItem = [self.model updateBlock:self.selectedItem withSoundType: 
+                             popoverViewController.soundTypeSegmentedController.selectedSegmentIndex];
+        
+    } else if ([popoverController.contentViewController isKindOfClass:
+                [BallDropEditBlockViewController class]])  {
+        
+    }
+
 }
 // =========== Popover delegate methods ==========================
 
@@ -810,7 +831,7 @@
 /* BallDropDeleteObjectDelegate method
  Based on which popover view controller sends the message
  delete the selected object (either block or ball source) from the model
- dismisses and releases popover
+ dismisses popover
 */
 -(void)deleteObject:(id)sender
 {
@@ -819,16 +840,13 @@
         [self.model removeBlock: self.selectedItem];
         self.selectedItem = nil;
         [self.blockEditPopover dismissPopoverAnimated:YES];
-        self.blockEditPopover = nil;
-        NSLog(@"self.blockEditPopover: %@", _blockEditPopover);
+
         
     } else if ([sender isKindOfClass:[BallDropEditBallSourceViewController class]]){
         
         [self.model removeBallSource: self.selectedItem];
         self.selectedItem = nil;
         [self.sourceEditPopover dismissPopoverAnimated:YES];
-        self.sourceEditPopover = nil;
-        NSLog(@"self.sourceEditPopover: %@", _sourceEditPopover);
         
     }
 }

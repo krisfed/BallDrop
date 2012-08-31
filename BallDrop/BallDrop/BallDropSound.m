@@ -19,9 +19,11 @@
     }
     note++; 
     NSMutableString *soundName;
+
     switch (soundType){
         case 0:
             soundName = [NSMutableString stringWithString:@"Drum"];
+            note = note % 8; //temp fix: are we going to have more drum sounds??
             break;
         case 1:
             soundName = [NSMutableString stringWithString:@"Bass"];

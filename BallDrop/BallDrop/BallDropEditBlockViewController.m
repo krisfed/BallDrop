@@ -15,12 +15,13 @@
 @implementation BallDropEditBlockViewController
 
 @synthesize deleteObjectDelegate = _deleteObjectDelegate;
+@synthesize soundTypeSegmentedController = _soundTypeSegmentedController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.contentSizeForViewInPopover = CGSizeMake(300.0, 300.0);
+        self.contentSizeForViewInPopover = CGSizeMake(250.0, 300.0);
     }
     return self;
 }
@@ -33,6 +34,7 @@
 
 - (void)viewDidUnload
 {
+    [self setSoundTypeSegmentedController:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
