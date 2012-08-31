@@ -58,6 +58,8 @@
 @synthesize updateCounter = _updateCounter;
 @synthesize editObjectState = _editBlockState;
 
+
+//-----------------------------------------------------------------------
 /* 
  Getter for the model with lazy instantiation
 */
@@ -88,6 +90,7 @@
     return _model;
 }
 
+//-----------------------------------------------------------------------
 /*
  Getter for the block edit popover with lazy instantiation
 */
@@ -104,6 +107,7 @@
     return _blockEditPopover;
 }
 
+//-----------------------------------------------------------------------
 /*
  Getter for the ball source edit popover with lazy instantiation
  */
@@ -120,6 +124,8 @@
     return _sourceEditPopover;
 }
 
+
+//-----------------------------------------------------------------------
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -155,7 +161,7 @@
 
 }
 
-
+//-----------------------------------------------------------------------
 - (void)setupGL
 {
     [EAGLContext setCurrentContext:self.context];
@@ -164,13 +170,14 @@
     int width = self.view.bounds.size.width;
     int height = self.view.bounds.size.height;
 
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, 0, height, 0.0, 1.0); //invert y-axis to match screen coords
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, width, 0, height, 0.0, 1.0); //y-axis is up 
     self.effect.transform.projectionMatrix = projectionMatrix;
 
     [self.effect prepareToDraw];
     
 }
 
+//-----------------------------------------------------------------------
 - (void)tearDownGL
 {
     [EAGLContext setCurrentContext:self.context];
@@ -179,6 +186,7 @@
 }
 
 
+//-----------------------------------------------------------------------
 /*
  Create vertices of a white circle at 0,0 with radius of 1
  and of a white square rectangle at 0,0 with a side of 1
@@ -215,6 +223,7 @@
 }
 
 
+//-----------------------------------------------------------------------
 /* 
  Using instance variable containing vetex model of a circle,
  return Vertex Buffer Object for a circle of a specified color
@@ -241,6 +250,8 @@
     return vertexBuffer;
 }
 
+
+//-----------------------------------------------------------------------
 /* 
  Using instance variable containing vetex model for a rectangle,
  return Vertex Buffer Object for a rectangle of a specified color
@@ -267,6 +278,7 @@
     return vertexBuffer;
 }
 
+//-----------------------------------------------------------------------
 /*
  Renders the model by iterating through and rendering each
  element of the model
@@ -309,6 +321,8 @@
     }
 }
 
+
+//-----------------------------------------------------------------------
 - (void) renderBall: (BDBall) ball
 {
     
@@ -337,6 +351,7 @@
 }
 
 
+//-----------------------------------------------------------------------
 - (void) renderBlock: (BDBlock) block
 {
     
@@ -409,7 +424,7 @@
     
 }
 
-
+//-----------------------------------------------------------------------
 - (void) renderSelectedBlock: (BDBlock) block
 {
     
@@ -491,7 +506,7 @@
         
 }
 
-
+//-----------------------------------------------------------------------
 - (void) renderBallSource: (BDBallSource) source
 {
     float defaultSourceColor[4] = {0, 0, 0, 1};
@@ -520,6 +535,7 @@
     
 }
 
+//-----------------------------------------------------------------------
 - (void) renderSelectedBallSource: (BDBallSource) source
 {
     //translate to the position of current source
@@ -573,7 +589,7 @@
     
 }
 
-
+//-----------------------------------------------------------------------
 /* 
  If the game is stopped, selects/unselects blocks and ball sources
  */
@@ -604,9 +620,12 @@
 }
 
 
+//-----------------------------------------------------------------------
 /*
  Pan gesture: 
  if there is an object selected, allows to edit it
+ (by showing a popover, or by adjusting control points,
+ or by simply moving)
  otherwise, adds a new block
 */
 - (void) handlePan:(UIPanGestureRecognizer *) pan
@@ -684,7 +703,7 @@
 }
 
 
-
+//-----------------------------------------------------------------------
 /*
  Returns a block that is at a specified point,
  nil if there is nothing
@@ -707,6 +726,8 @@
     
 }
     
+
+//-----------------------------------------------------------------------
 /*
  Returns a ball source that is a at a specified point
  (if several, the closest one),
@@ -734,7 +755,7 @@
 }
    
 
-
+//-----------------------------------------------------------------------
 /*
  Prevents tap gesture from interfering with buttons by
  creating a non-tapable area for buttons (70 pixels from the
@@ -785,10 +806,11 @@
 // =========== Popover delegate methods ==========================
 
 
+//-----------------------------------------------------------------------
 /* BallDropDeleteObjectDelegate method
- Based on the popover view controller sending the message
- delete the selected object from the model
- dismiss popover
+ Based on which popover view controller sends the message
+ delete the selected object (either block or ball source) from the model
+ dismisses and releases popover
 */
 -(void)deleteObject:(id)sender
 {
@@ -811,7 +833,7 @@
     }
 }
 
-
+//-----------------------------------------------------------------------
 - (IBAction)newFilePressed:(UIButton *)sender 
 {
     NSLog(@"new file");
@@ -824,16 +846,19 @@
     }
 }
 
+//-----------------------------------------------------------------------
 - (IBAction)saveFilePressed:(UIButton *)sender 
 {
     NSLog(@"save file");
 }
 
+//-----------------------------------------------------------------------
 - (IBAction)loadFilePressed:(UIButton *)sender 
 {
     NSLog(@"load file");
 }
 
+//-----------------------------------------------------------------------
 - (IBAction)newBallSourcePressed:(UIButton *)sender 
 {
     NSLog(@"new ball source");
@@ -841,6 +866,7 @@
     [self.model addBallSourceAt:randomX];
 }
 
+//-----------------------------------------------------------------------
 - (IBAction)playStopPressed:(UIButton *)sender {
     self.isPlaying = !self.isPlaying;
     
@@ -856,6 +882,7 @@
     }
 }
 
+//-----------------------------------------------------------------------
 /*
  Displays a popover with instructions
 */
@@ -863,9 +890,8 @@
 {
     if (!self.startUpPopover){
         BallDropStartUpViewController *content = [[BallDropStartUpViewController alloc] init];
-        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:content];
-        //popover.delegate = self;
-    
+        UIPopoverController *popover = [[UIPopoverController alloc] 
+                                        initWithContentViewController:content];
         self.startUpPopover = popover;
     }
     
@@ -873,6 +899,7 @@
     [self.startUpPopover presentPopoverFromRect:CGRectMake(self.view.bounds.size.width/2,400, 1, 1) inView:self.view permittedArrowDirections:0 animated:YES];
 }
 
+//-----------------------------------------------------------------------
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -886,6 +913,7 @@
     // Release any retained subviews of the main view.
 }
 
+//-----------------------------------------------------------------------
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait) || 
@@ -895,6 +923,7 @@
 
 #pragma mark - GLKView and GLKViewController delegate methods
 
+//-----------------------------------------------------------------------
 - (void)update
 {
     if (self.isPlaying)
@@ -922,6 +951,7 @@
     self.updateCounter++;
 }
 
+//-----------------------------------------------------------------------
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     

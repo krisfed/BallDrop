@@ -23,6 +23,7 @@
 @synthesize ballSources = _ballSources;
 @synthesize collisions = _collisions;
 
+//-----------------------------------------------------------------------
 - (NSMutableArray*) balls 
 {
     if (!_balls) {
@@ -30,7 +31,7 @@
     }
     return _balls;
 }
-
+//-----------------------------------------------------------------------
 - (NSMutableArray*) blocks 
 {
     if (!_blocks) {
@@ -39,6 +40,7 @@
     return _blocks;
 }
 
+//-----------------------------------------------------------------------
 - (NSMutableArray*) ballSources 
 {
     if (!_ballSources) {
@@ -47,6 +49,7 @@
     return _ballSources;
 }
 
+//-----------------------------------------------------------------------
 - (NSMutableArray*) collisions 
 {
     if (!_collisions) {
@@ -55,6 +58,7 @@
     return _collisions;
 }
 
+//-----------------------------------------------------------------------
 - (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top
 {
     _halfPlanes[0] = right;
@@ -62,7 +66,7 @@
     _halfPlanes[2] = top;    
 }
 
-
+//-----------------------------------------------------------------------
 - (id)initWithHalfPlanesRight: (BDHalfPlane)right Left: (BDHalfPlane)left Top: (BDHalfPlane)top
 {
     self = [super init];
@@ -94,6 +98,7 @@
     return self;
 }
 
+//-----------------------------------------------------------------------
 /*
  Add a ball to the model at specified point
 */
@@ -109,6 +114,7 @@
     [self.balls addObject:[NSValue value:&newBall withObjCType:@encode(BDBall)]];
 }
 
+//-----------------------------------------------------------------------
 /*
  Add a block to the model with specified endpoints
  */
@@ -154,7 +160,7 @@
     [self.blocks addObject:[NSValue value:&newBlock withObjCType:@encode(BDBlock)]];
 }
 
-
+//-----------------------------------------------------------------------
 /*
  Calculates and updates block's angle and length based
  on the block's endpoints information; 
@@ -170,6 +176,7 @@
     return block;
 }
 
+//-----------------------------------------------------------------------
 /*
  Begins a sequence to draw a new block.
 */
@@ -178,6 +185,7 @@
     [self addBlockFrom:startPoint to:startPoint];
 }
 
+//-----------------------------------------------------------------------
 /*
  Continues a sequence to draw a new block.
 */
@@ -191,6 +199,7 @@
     [self addBlockFrom:p1 to:endPoint];
 }
 
+//-----------------------------------------------------------------------
 /*
  Finishes a sequence to draw a new block. This function finalizes the block endpoint
 */
@@ -205,8 +214,10 @@
 
 }
 
+//-----------------------------------------------------------------------
 /*
  Changes the specified block's endpoint to the one provided
+ by replacing the old block in the model with the updated one
  Returns the pointer to the modified block
 */
 - (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint
@@ -222,8 +233,10 @@
     return [self.blocks lastObject];
 }
 
+//-----------------------------------------------------------------------
 /*
  Changes the specified block's startpoint to the one provided
+ by replacing the old block in the model with the updated one
  Returns the pointer to the modified block
  */
 - (id)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint
@@ -239,8 +252,10 @@
     return [self.blocks lastObject];
 }
 
+//-----------------------------------------------------------------------
 /*
  Moves the specified block to the new position provided
+ (by replacing the old block in the model with the updated one)
  Returns the pointer to the modified block
 */
 - (id)moveBlock: (id)blockObject toPosition:(float[2])newPosition
@@ -261,7 +276,7 @@
     return [self.blocks lastObject];
 }
 
-
+//-----------------------------------------------------------------------
 /*
  Adds a ball source with a specified x position
 */
@@ -274,6 +289,7 @@
     [self.ballSources addObject:[NSValue value:&newSource withObjCType:@encode(BDBallSource)]];
 }
 
+//-----------------------------------------------------------------------
 /*
  Moves the specified ball source to a provided new x position;
  Returns the pointer to the specified ball source
@@ -289,6 +305,7 @@
     
 }
 
+//-----------------------------------------------------------------------
 /*
  Removes the specified block from the model
 */
@@ -298,6 +315,7 @@
     
 }
 
+//-----------------------------------------------------------------------
 /*
  Removes the specified ball source from the model
  */
@@ -306,6 +324,8 @@
     [self.ballSources removeObject:ballSource];
 }
 
+
+//-----------------------------------------------------------------------
 - (void) advanceModelState:(float) deltaT
 {
     //----Wall half planes (x, y, nx, ny)
@@ -413,6 +433,8 @@
 	}
 }
 
+
+//-----------------------------------------------------------------------
 - (void) handleCollision: (id) c
 {
     
