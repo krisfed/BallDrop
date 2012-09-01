@@ -630,6 +630,7 @@
                 [self.selectedItem getValue:&ballSource];
                 BallDropEditBallSourceViewController *popoverViewController = (BallDropEditBallSourceViewController *) self.sourceEditPopover.contentViewController;
                 popoverViewController.showPathSwitch.on = ballSource.showBallPath;
+                [popoverViewController setPeriod: ballSource.period];
             }
         }
         
@@ -832,8 +833,8 @@
         BallDropEditBallSourceViewController *popoverViewController = (BallDropEditBallSourceViewController *) popoverController.contentViewController;
         self.selectedItem = [self.model 
                              updateBallSource: self.selectedItem 
-                             withShowPath:popoverViewController.showPathSwitch.on];
-        //NSLog(@" %@",popoverViewController.showPathSwitch.on);
+                             withShowPath: popoverViewController.showPathSwitch.on
+                             withPeriod: popoverViewController.periodStepper.value];
         
     }
 

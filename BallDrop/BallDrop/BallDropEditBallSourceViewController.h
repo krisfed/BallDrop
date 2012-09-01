@@ -13,7 +13,15 @@
 
 @property (nonatomic) id <BallDropDeleteObjectDelegate> deleteObjectDelegate;
 
+//UI elements:
 @property (strong, nonatomic) IBOutlet UISwitch *showPathSwitch;
-- (IBAction)deletePressed:(UIButton *)sender;
 
+@property (strong, nonatomic) IBOutlet UIStepper *periodStepper;
+
+@property (strong, nonatomic) IBOutlet UILabel *periodLabel;
+
+
+- (IBAction)deletePressed:(UIButton *)sender;
+- (IBAction)periodValueChanged;
+- (void)setPeriod:(int)period;
 @end

@@ -65,7 +65,7 @@ typedef struct {
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
 - (id)moveBallSource: (id)sourceObject toPosition:(float)newX;
-- (id)updateBallSource:(id)sourceObject withShowPath:(BOOL)showPath;
+- (id)updateBallSource:(id)sourceObject withShowPath:(BOOL)showPath withPeriod:(int)period;
 - (void) advanceModelState:(float) deltaT;
 - (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top;
 - (void) removeBlock: (id) block;

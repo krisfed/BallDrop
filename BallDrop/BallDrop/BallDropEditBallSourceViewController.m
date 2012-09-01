@@ -18,6 +18,8 @@
 
 @synthesize deleteObjectDelegate = _deleteObjectDelegate;
 @synthesize showPathSwitch = _showPathSwitch;
+@synthesize periodStepper = _periodStepper;
+@synthesize periodLabel = _periodLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,12 +33,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    self.periodLabel.text = [NSString stringWithFormat:@"%.f", self.periodStepper.value];
 }
 
 - (void)viewDidUnload
 {
     [self setShowPathSwitch:nil];
+    [self setPeriodStepper:nil];
+    [self setPeriodLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -56,4 +61,25 @@
     [self.deleteObjectDelegate deleteObject:self];
     
 }
+
+/*
+ Set the value of the period label to the value of the stepper
+ when the value of the stepper changes
+*/
+- (IBAction)periodValueChanged 
+{
+    self.periodLabel.text = [NSString stringWithFormat:@"%.f", self.periodStepper.value];
+}
+
+
+/*
+ Allows to set the period value
+ (for both label and stepper)
+*/
+- (void)setPeriod:(int)period
+{
+    self.periodStepper.value = period;
+    [self periodValueChanged];
+}
+
 @end
