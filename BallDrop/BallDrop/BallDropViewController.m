@@ -623,6 +623,13 @@
             //if source is selected, show source edit popover
             if (self.selectedItem) {
                 [self.sourceEditPopover presentPopoverFromRect:CGRectMake(location.x, location.y, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+                
+                //update the controls of the popover to match
+                //the properties of the selected ball source
+                BDBallSource ballSource;
+                [self.selectedItem getValue:&ballSource];
+                BallDropEditBallSourceViewController *popoverViewController = (BallDropEditBallSourceViewController *) self.sourceEditPopover.contentViewController;
+                popoverViewController.showPathSwitch.on = ballSource.showBallPath;
             }
         }
         
@@ -819,7 +826,14 @@
                              popoverViewController.soundTypeSegmentedController.selectedSegmentIndex];
         
     } else if ([popoverController.contentViewController isKindOfClass:
-                [BallDropEditBlockViewController class]])  {
+                [BallDropEditBallSourceViewController class]])  {
+        
+        //update the properties of selected ball source as specifed in popover
+        BallDropEditBallSourceViewController *popoverViewController = (BallDropEditBallSourceViewController *) popoverController.contentViewController;
+        self.selectedItem = [self.model 
+                             updateBallSource: self.selectedItem 
+                             withShowPath:popoverViewController.showPathSwitch.on];
+        //NSLog(@" %@",popoverViewController.showPathSwitch.on);
         
     }
 

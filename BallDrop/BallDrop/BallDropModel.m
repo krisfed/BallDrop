@@ -324,6 +324,22 @@
 
 //-----------------------------------------------------------------------
 /*
+ Updates the specified ball source with given showPath boolean value;
+ Returns the pointer to the specified ball source
+ */
+- (id)updateBallSource:(id)sourceObject withShowPath:(BOOL)showPath
+{
+    BDBallSource source;
+    [sourceObject getValue:&source];
+    source.showBallPath = showPath;
+    [self.ballSources removeObject:sourceObject];
+    [self.ballSources addObject:[NSValue value:&source withObjCType:@encode(BDBallSource)]];
+    return [self.ballSources lastObject];
+    
+}
+
+//-----------------------------------------------------------------------
+/*
  Removes the specified block from the model
 */
 - (void) removeBlock: (id) block

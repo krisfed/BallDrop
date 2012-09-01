@@ -17,6 +17,7 @@
 @implementation BallDropEditBallSourceViewController
 
 @synthesize deleteObjectDelegate = _deleteObjectDelegate;
+@synthesize showPathSwitch = _showPathSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +36,7 @@
 
 - (void)viewDidUnload
 {
+    [self setShowPathSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

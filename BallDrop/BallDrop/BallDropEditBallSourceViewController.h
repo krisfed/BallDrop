@@ -13,6 +13,7 @@
 
 @property (nonatomic) id <BallDropDeleteObjectDelegate> deleteObjectDelegate;
 
+@property (strong, nonatomic) IBOutlet UISwitch *showPathSwitch;
 - (IBAction)deletePressed:(UIButton *)sender;
 
 @end

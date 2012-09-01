@@ -61,10 +61,11 @@ typedef struct {
 - (id)moveBlock: (id)blockObject toPosition:(float[2])newPosition;
 - (id)updateBlock:(id)blockObject withStartpoint:(float[2])newStartpoint;
 - (id)updateBlock:(id)blockObject withEndpoint:(float[2])newEndpoint;
-- (id)updateBlock:(id)blockObject withSoundType:(int)soundType;
+- (id)updateBlock:(id)blockObject withSoundType:(int)soundType; 
 - (void) addBallAt:(CGPoint)center;
 - (void) addBallSourceAt:(CGFloat) xpos;
 - (id)moveBallSource: (id)sourceObject toPosition:(float)newX;
+- (id)updateBallSource:(id)sourceObject withShowPath:(BOOL)showPath;
 - (void) advanceModelState:(float) deltaT;
 - (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top;
 - (void) removeBlock: (id) block;
