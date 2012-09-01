@@ -33,8 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.periodLabel.text = [NSString stringWithFormat:@"%.f", self.periodStepper.value];
 }
 
 - (void)viewDidUnload
