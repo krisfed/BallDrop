@@ -452,11 +452,12 @@
 			if (force > 0) {
                 //ignore the first four blocks
                 if (i>3) {
-                    [BallDropSound makeSoundofType:block.soundType ofNote:block.note];
+                    //[BallDropSound makeSoundofType:block.soundType ofNote:block.note];
                 }
 			}
 		}
-        [self.balls replaceObjectAtIndex:j withObject:[NSValue value:&ball withObjCType:@encode(BDBall)]];
+        [self.balls replaceObjectAtIndex:j withObject:[NSValue value:&ball 
+                                                        withObjCType:@encode(BDBall)]];
 	}
     
     
@@ -477,10 +478,13 @@
     
 }
 
+/*
+ Generates ball paths for each ball source
+*/
 -(void)generateBallPaths
 {
     //create a copy of the model to simulate the paths with
-    BallDropModel *copyModel = [self copy];
+    BallDropModel *copyModel = [self copyWithBlocksAndHalfPlanes];
     
     //iterate through ball sources
     for (int i = 0; i < self.ballSources.count; i++) {
@@ -502,6 +506,7 @@
             if (j % INTERVALS_PER_PATH_SAMPLE == 0) {
                 
                 if (copyModel.balls.count>0) {
+                    NSLog(@"source: %i, step: %i", i, j);
                     //extract the single ball from copy model
                     BDBall ball;
                     [[copyModel.balls objectAtIndex:0] getValue:&ball];
@@ -516,10 +521,6 @@
                     source.ballPath[pathPointIndex+1] = 0;
                     pathPointIndex += 2;
                 }
-                
-
-                
-                
 
             }
         }
@@ -532,10 +533,9 @@
         //put the updated source back
         [self.ballSources replaceObjectAtIndex:i withObject:[NSValue value:&source withObjCType:@encode(BDBallSource)]];
         
-        copyModel = nil;
-        
-        
     }
+    
+    copyModel = nil;
     
 }
 
@@ -546,7 +546,11 @@
 }
 
 //-----------------------------------------------------------------------
-- (BallDropModel *)copy
+/*
+ Creates and returns a model that has the same blocks and 
+ half planes as this one
+*/
+- (BallDropModel *)copyWithBlocksAndHalfPlanes
 {
     BallDropModel *copyModel = [[BallDropModel alloc] init];
     
