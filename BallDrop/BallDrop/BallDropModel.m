@@ -22,6 +22,7 @@
 @synthesize blocks = _blocks;
 @synthesize ballSources = _ballSources;
 @synthesize collisions = _collisions;
+@synthesize soundON = _soundON;
 
 //-----------------------------------------------------------------------
 - (NSMutableArray*) balls 
@@ -76,7 +77,7 @@
         _halfPlanes[2] = top;
         
         
-
+        self.soundON = YES;
         
         // four blocks define sink
         float sinkLength    = 270;
@@ -234,6 +235,9 @@
     block = [self recalculateAngleAndLengthForBlock:block];
     [self.blocks removeObject:blockObject];
     [self.blocks addObject:[NSValue value:&block withObjCType:@encode(BDBlock)]];
+    
+    [self generateBallPaths];
+    
     return [self.blocks lastObject];
 }
 
@@ -253,6 +257,9 @@
     block = [self recalculateAngleAndLengthForBlock:block];
     [self.blocks removeObject:blockObject];
     [self.blocks addObject:[NSValue value:&block withObjCType:@encode(BDBlock)]];
+    
+    [self generateBallPaths];
+    
     return [self.blocks lastObject];
 }
 
@@ -452,7 +459,7 @@
 			if (force > 0) {
                 //ignore the first four blocks
                 if (i>3) {
-                    //[BallDropSound makeSoundofType:block.soundType ofNote:block.note];
+                    if (self.soundON) [BallDropSound makeSoundofType:block.soundType ofNote:block.note];
                 }
 			}
 		}
@@ -485,6 +492,7 @@
 {
     //create a copy of the model to simulate the paths with
     BallDropModel *copyModel = [self copyWithBlocksAndHalfPlanes];
+    copyModel.soundON = NO;
     
     //iterate through ball sources
     for (int i = 0; i < self.ballSources.count; i++) {
@@ -506,7 +514,6 @@
             if (j % INTERVALS_PER_PATH_SAMPLE == 0) {
                 
                 if (copyModel.balls.count>0) {
-                    NSLog(@"source: %i, step: %i", i, j);
                     //extract the single ball from copy model
                     BDBall ball;
                     [[copyModel.balls objectAtIndex:0] getValue:&ball];

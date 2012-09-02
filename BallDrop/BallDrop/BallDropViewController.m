@@ -319,9 +319,8 @@
             [self renderBallSource: source];
         }
         
-        //----ball paths
+        //----ball paths:
         if ((!self.isPlaying)&&(source.showBallPath)) {
-            NSLog(@"path for source %i", i);
             [self renderBallPath:source.ballPath];
         }
         
@@ -361,8 +360,6 @@
 - (void)renderBallPath: (float[2*NUM_PATH_SAMPLES]) path
 {
     for (int i = 0; i<2*NUM_PATH_SAMPLES; i += 2) {
-//        NSLog(@" x_i: %i, y_i: %i", i, i+1);
-        NSLog(@" x: %f, y: %f", path[i], path[i+1]);
         
         //transform to draw current point
         GLKMatrix4 pointModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, path[i], 
@@ -580,7 +577,6 @@
 //-----------------------------------------------------------------------
 - (void) renderSelectedBallSource: (BDBallSource) source
 {
-//    NSLog(@"rendering selected ball source");
     
     //translate to the position of current source
     GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, self.view.bounds.size.height - SOURCE_SIZE/2, 0);

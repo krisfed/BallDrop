@@ -59,6 +59,7 @@ typedef struct {
 @property (nonatomic, strong) NSMutableArray *blocks;
 @property (nonatomic, strong) NSMutableArray *ballSources;
 @property (nonatomic, strong) NSMutableArray *collisions;
+@property (nonatomic) BOOL soundON;
 
 
 - (id)initWithHalfPlanesRight: (BDHalfPlane)right Left: (BDHalfPlane)left Top: (BDHalfPlane)top;
