@@ -510,7 +510,6 @@
         
         //iterate through steps
         for (int j = 0; j < numSteps; j++) {
-            [copyModel advanceModelState:SIMULATION_INTERVAL];
             if (j % INTERVALS_PER_PATH_SAMPLE == 0) {
                 
                 if (copyModel.balls.count>0) {
@@ -530,6 +529,8 @@
                 }
 
             }
+            
+            [copyModel advanceModelState:SIMULATION_INTERVAL]; 
         }
         
         //reset the copy model's balls array

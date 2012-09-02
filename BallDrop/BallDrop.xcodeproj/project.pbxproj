@@ -51,6 +51,7 @@
 		F702EB3615EC35980059598C /* BallDropEditBlockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F702EB3415EC35980059598C /* BallDropEditBlockViewController.xib */; };
 		F702EB3B15EECCC40059598C /* BallDropEditBallSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F702EB3915EECCC30059598C /* BallDropEditBallSourceViewController.m */; };
 		F702EB3C15EECCC40059598C /* BallDropEditBallSourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F702EB3A15EECCC40059598C /* BallDropEditBallSourceViewController.xib */; };
+		F713968215F3DBCE00AF527F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F713968115F3DBCE00AF527F /* QuartzCore.framework */; };
 		F79DCDE615DA4A32009EFF09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE515DA4A32009EFF09 /* UIKit.framework */; };
 		F79DCDE815DA4A32009EFF09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE715DA4A32009EFF09 /* Foundation.framework */; };
 		F79DCDEA15DA4A32009EFF09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79DCDE915DA4A32009EFF09 /* CoreGraphics.framework */; };
@@ -114,6 +115,7 @@
 		F702EB3815EECCC00059598C /* BallDropEditBallSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallDropEditBallSourceViewController.h; sourceTree = "<group>"; };
 		F702EB3915EECCC30059598C /* BallDropEditBallSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallDropEditBallSourceViewController.m; sourceTree = "<group>"; };
 		F702EB3A15EECCC40059598C /* BallDropEditBallSourceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BallDropEditBallSourceViewController.xib; sourceTree = "<group>"; };
+		F713968115F3DBCE00AF527F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F774C32915F0291900CFC913 /* BallDropDeleteObjectDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BallDropDeleteObjectDelegate.h; sourceTree = "<group>"; };
 		F79DCDE115DA4A32009EFF09 /* BallDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BallDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79DCDE515DA4A32009EFF09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -137,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F713968215F3DBCE00AF527F /* QuartzCore.framework in Frameworks */,
 				ED151F6F15E6918000F3966E /* AudioToolbox.framework in Frameworks */,
 				F7D50EC215E5BE7300CE05A8 /* GLKit.framework in Frameworks */,
 				F7D50EC315E5BE7300CE05A8 /* OpenGLES.framework in Frameworks */,
@@ -217,6 +220,7 @@
 		F79DCDD615DA4A32009EFF09 = {
 			isa = PBXGroup;
 			children = (
+				F713968115F3DBCE00AF527F /* QuartzCore.framework */,
 				ED151F6E15E6918000F3966E /* AudioToolbox.framework */,
 				F7D50EC015E5BE7300CE05A8 /* GLKit.framework */,
 				F7D50EC115E5BE7300CE05A8 /* OpenGLES.framework */,

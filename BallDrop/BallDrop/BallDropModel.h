@@ -15,7 +15,7 @@
 #define SIMULATION_INTERVAL 0.033
 
 #define NUM_PATH_SAMPLES			50	  // # samples in the path
-#define INTERVALS_PER_PATH_SAMPLE	3	  // # simulation steps per path sample
+#define INTERVALS_PER_PATH_SAMPLE	2	  // # simulation steps per path sample
 
 @interface BallDropModel : NSObject
 
