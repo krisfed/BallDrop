@@ -136,6 +136,7 @@
     }
     
     GLKView *view = (GLKView *)self.view;
+    view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.context = self.context;
     [EAGLContext setCurrentContext:self.context];
     
