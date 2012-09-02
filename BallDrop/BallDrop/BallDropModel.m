@@ -499,16 +499,28 @@
         //iterate through steps
         for (int j = 0; j < numSteps; j++) {
             [copyModel advanceModelState:SIMULATION_INTERVAL];
-            if ((j % INTERVALS_PER_PATH_SAMPLE == 0)&&(copyModel.balls.count>0)) {
+            if (j % INTERVALS_PER_PATH_SAMPLE == 0) {
                 
-                //extract the single ball from copy model
-                BDBall ball;
-                [[copyModel.balls objectAtIndex:0] getValue:&ball];
+                if (copyModel.balls.count>0) {
+                    //extract the single ball from copy model
+                    BDBall ball;
+                    [[copyModel.balls objectAtIndex:0] getValue:&ball];
+                    
+                    //save ball's position to the source's ballPath array
+                    source.ballPath[pathPointIndex] = ball.centerPoint[0];
+                    source.ballPath[pathPointIndex+1] = ball.centerPoint[1];
+                    pathPointIndex += 2;
+                } else {
+                    //zero out unused part of the ball path array
+                    source.ballPath[pathPointIndex] = 0;
+                    source.ballPath[pathPointIndex+1] = 0;
+                    pathPointIndex += 2;
+                }
                 
-                //save ball's position to the source's ballPath array
-                source.ballPath[pathPointIndex] = ball.centerPoint[0];
-                source.ballPath[pathPointIndex+1] = ball.centerPoint[1];
-                pathPointIndex += 2;
+
+                
+                
+
             }
         }
         
@@ -519,6 +531,8 @@
         
         //put the updated source back
         [self.ballSources replaceObjectAtIndex:i withObject:[NSValue value:&source withObjCType:@encode(BDBallSource)]];
+        
+        copyModel = nil;
         
         
     }
