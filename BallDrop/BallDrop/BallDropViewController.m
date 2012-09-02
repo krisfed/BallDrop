@@ -15,9 +15,9 @@
 
 #define NUM_BALL_SECTIONS 32
 #define MAX_NUM_BALLS 10
-#define SOURCE_SIZE 25
 #define HANDLES_SIZE 20
 #define SELECTION_RADIUS 10 //how sensitive selection is to touch
+#define PATH_POINT_SIZE 3
 
 @interface BallDropViewController ()
 
@@ -313,9 +313,15 @@
         [sourceObject getValue:&source];
         
         if (sourceObject == self.selectedItem) {
+            //NSLog(@"this source is selected");
             [self renderSelectedBallSource: source];
         } else {
             [self renderBallSource: source];
+        }
+        
+        //----ball paths
+        if ((!self.isPlaying)&&(source.showBallPath)) {
+            [self renderBallPath:source.ballPath];
         }
         
     }
@@ -350,6 +356,41 @@
     [self.effect prepareToDraw];
 }
 
+//-----------------------------------------------------------------------
+- (void)renderBallPath: (float[2*NUM_PATH_SAMPLES]) path
+{
+    for (int i = 0; i<2*NUM_PATH_SAMPLES; i += 2) {
+//        NSLog(@" x_i: %i, y_i: %i", i, i+1);
+//        NSLog(@" x: %f, y: %f", path[i], path[i+1]);
+        
+        //transform to draw current point
+        GLKMatrix4 pointModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, path[i], 
+                                                          path[i+1], 0);
+        pointModelMatrix = GLKMatrix4Scale(pointModelMatrix, PATH_POINT_SIZE, 
+                                           PATH_POINT_SIZE, 1);
+        self.effect.transform.modelviewMatrix = pointModelMatrix;
+        [self.effect prepareToDraw];
+        
+        //draw
+        float pointColor[4] = {1, 0, 0, 1};
+        GLuint VBO = [self getBallVBOofColor:pointColor];
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glEnableVertexAttribArray(GLKVertexAttribPosition);
+        glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                              (const GLvoid *) offsetof(Vertex, Position));
+        glEnableVertexAttribArray(GLKVertexAttribColor);
+        glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 
+                              (const GLvoid *) offsetof(Vertex, Color));
+        glDrawArrays(GL_TRIANGLE_FAN, 0, NUM_BALL_SECTIONS+2);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glDisableVertexAttribArray(GLKVertexAttribColor);
+        
+        //return to normal:
+        self.effect.transform.modelviewMatrix = GLKMatrix4Identity; 
+        [self.effect prepareToDraw];
+    }
+    
+}
 
 //-----------------------------------------------------------------------
 - (void) renderBlock: (BDBlock) block
@@ -538,6 +579,8 @@
 //-----------------------------------------------------------------------
 - (void) renderSelectedBallSource: (BDBallSource) source
 {
+//    NSLog(@"rendering selected ball source");
+    
     //translate to the position of current source
     GLKMatrix4 sourceModelMatrix = GLKMatrix4Translate(GLKMatrix4Identity, source.xpos, self.view.bounds.size.height - SOURCE_SIZE/2, 0);
     
@@ -959,8 +1002,7 @@
 //-----------------------------------------------------------------------
 - (void)update
 {
-    if (self.isPlaying)
-    {
+    if (self.isPlaying){
         self.selectedItem = nil;
         
         int i;
@@ -973,14 +1015,15 @@
                 [[self.model.ballSources objectAtIndex:i] getValue:&source];
                 if ((self.model.balls.count < MAX_NUM_BALLS)
                     &&((self.beatCounter % source.period) == 0)){
-                    [self.model addBallAt:CGPointMake(source.xpos, self.view.bounds.size.height)];
+                    [self.model addBallAt:CGPointMake(source.xpos, 
+                                                      self.view.bounds.size.height)];
                 }
             }   
             self.beatCounter++;
         }
         
-        [self.model advanceModelState:0.033];
-    }    
+        [self.model advanceModelState:SIMULATION_INTERVAL];
+    }  
     self.updateCounter++;
 }
 

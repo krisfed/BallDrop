@@ -76,8 +76,7 @@
         _halfPlanes[2] = top;
         
         
-        // one source by default as example
-        [self addBallSourceAt:100];
+
         
         // four blocks define sink
         float sinkLength    = 270;
@@ -92,6 +91,8 @@
         [self addBlockFrom:CGPointMake(_halfPlanes[0].pointOnPlane[0], sinkMaxHeight) 
                         to:CGPointMake(_halfPlanes[0].pointOnPlane[0] - sinkLength, sinkMinHeight)];
         
+        // one source by default as example
+        [self addBallSourceAt:100];
         
     }
     
@@ -158,6 +159,7 @@
     newBlock = [self recalculateAngleAndLengthForBlock:newBlock];
     
     [self.blocks addObject:[NSValue value:&newBlock withObjCType:@encode(BDBlock)]];
+    
 }
 
 //-----------------------------------------------------------------------
@@ -211,6 +213,8 @@
     CGPoint p1 = CGPointMake(block.startPoint[0], block.startPoint[1]);
     [self.blocks removeLastObject];
     [self addBlockFrom:p1 to:endPoint];
+    
+    [self generateBallPaths];
 
 }
 
@@ -304,6 +308,8 @@
     newSource.period = 4; 
     newSource.showBallPath = NO;
     [self.ballSources addObject:[NSValue value:&newSource withObjCType:@encode(BDBallSource)]];
+    
+    [self generateBallPaths];
 }
 
 //-----------------------------------------------------------------------
@@ -318,6 +324,9 @@
     source.xpos = newX;
     [self.ballSources removeObject:sourceObject];
     [self.ballSources addObject:[NSValue value:&source withObjCType:@encode(BDBallSource)]];
+    
+    [self generateBallPaths];
+    
     return [self.ballSources lastObject];
     
 }
@@ -465,13 +474,72 @@
         }
         
 	}
+    
 }
 
+-(void)generateBallPaths
+{
+    //create a copy of the model to simulate the paths with
+    BallDropModel *copyModel = [self copy];
+    
+    //iterate through ball sources
+    for (int i = 0; i < self.ballSources.count; i++) {
+		BDBallSource source;
+        [[self.ballSources objectAtIndex:i] getValue:&source];
+        
+        //add ball to copy model at the position of the ball source
+        [copyModel addBallAt:CGPointMake(source.xpos, 
+                                         _halfPlanes[2].pointOnPlane[1]/* top plane's y */ - SOURCE_SIZE )];
+        
+
+        
+        int numSteps = NUM_PATH_SAMPLES * INTERVALS_PER_PATH_SAMPLE;
+        int pathPointIndex = 0;
+        
+        //iterate through steps
+        for (int j = 0; j < numSteps; j++) {
+            [copyModel advanceModelState:SIMULATION_INTERVAL];
+            if ((j % INTERVALS_PER_PATH_SAMPLE == 0)&&(copyModel.balls.count>0)) {
+                
+                //extract the single ball from copy model
+                BDBall ball;
+                [[copyModel.balls objectAtIndex:0] getValue:&ball];
+                
+                //save ball's position to the source's ballPath array
+                source.ballPath[pathPointIndex] = ball.centerPoint[0];
+                source.ballPath[pathPointIndex+1] = ball.centerPoint[1];
+                pathPointIndex += 2;
+            }
+        }
+        
+        //reset the copy model's balls array
+        copyModel.balls = [[NSMutableArray alloc] init];// maybe if not erasing, 
+                                                        //could reflect ball collisions
+                                                        //in the path as well
+        
+        //put the updated source back
+        [self.ballSources replaceObjectAtIndex:i withObject:[NSValue value:&source withObjCType:@encode(BDBallSource)]];
+        
+        
+    }
+    
+}
 
 //-----------------------------------------------------------------------
 - (void) handleCollision: (id) c
 {
     
+}
+
+//-----------------------------------------------------------------------
+- (BallDropModel *)copy
+{
+    BallDropModel *copyModel = [[BallDropModel alloc] init];
+    
+    copyModel.blocks =  [[NSMutableArray alloc] initWithArray:self.blocks copyItems:YES];
+    [copyModel setHalfPlanesRight:_halfPlanes[0] Left:_halfPlanes[1] Top:_halfPlanes[2]];
+    
+    return copyModel;
 }
 
 

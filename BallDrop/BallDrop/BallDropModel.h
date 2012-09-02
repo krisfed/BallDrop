@@ -10,6 +10,12 @@
 
 #define BALL_RADIUS 10
 #define BLOCK_RADIUS 3
+#define SOURCE_SIZE 25
+
+#define SIMULATION_INTERVAL 0.033
+
+#define NUM_PATH_SAMPLES			50	  // # samples in the path
+#define INTERVALS_PER_PATH_SAMPLE	3	  // # simulation steps per path sample
 
 @interface BallDropModel : NSObject
 
@@ -40,6 +46,7 @@ typedef struct {
     float xpos;
     int period; //number of time ticks it waits to release each ball
     BOOL showBallPath;
+    float ballPath[2*NUM_PATH_SAMPLES];	// Ball position at each path sample point 
 } BDBallSource;
 
 typedef struct {
@@ -70,6 +77,7 @@ typedef struct {
 - (void) setHalfPlanesRight: (BDHalfPlane)right Left:(BDHalfPlane)left Top: (BDHalfPlane)top;
 - (void) removeBlock: (id) block;
 - (void) removeBallSource: (id) ballSource;
+- (void)generateBallPaths;
 
 
 @end
